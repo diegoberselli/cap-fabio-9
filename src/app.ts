@@ -7,8 +7,12 @@ const app = express();
 app.use(express.json());
 app.use(handleError);
 
-app.listen(3000, () => {
-  console.log("Server Started");
-});
+app.get("/", (request, response) => {
+  response.send("Hello World")
+})
 
-export default app;
+app.listen(process.env.PORT || 3000, () => {
+    console.log("Running at 3000");
+  });
+
+  export default app;

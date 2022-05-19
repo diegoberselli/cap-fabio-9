@@ -9,7 +9,8 @@
     "dev": "ts-node-dev src/app.ts",
     "typeorm": "typeorm-ts-node-commonjs",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "start": "node dist/app.js"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
