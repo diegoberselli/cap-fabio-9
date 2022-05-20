@@ -7,7 +7,7 @@ import deleteStoreService from "../services/store/deleteStore.service";
 
 export default class StoreController {
   static store = async (request: Request, response: Response) => {
-    const { branch, city, street, district, number, zipCode, phone } =
+    const { branch, city, street, district, number, zipcode, phone } =
       request.body;
     const store = await CreateStoreService.execute({
       branch,
@@ -15,7 +15,7 @@ export default class StoreController {
       street,
       district,
       number,
-      zipCode,
+      zipcode,
       phone,
     });
     return response.status(201).json(store);
@@ -33,7 +33,7 @@ export default class StoreController {
   };
 
   static update = async (request: Request, response: Response) => {
-    const { branch, city, street, district, number, zipCode, phone } =
+    const { branch, city, street, district, number, zipcode, phone } =
       request.body;
     const { id } = request.params;
     const updatedStore = await UpdateStoreService.execute({
@@ -43,7 +43,7 @@ export default class StoreController {
       street,
       district,
       number,
-      zipCode,
+      zipcode,
       phone,
     });
     return response.status(200).json(updatedStore);

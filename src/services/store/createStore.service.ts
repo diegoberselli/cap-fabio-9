@@ -10,7 +10,7 @@ export default class CreateStoreService {
     street,
     district,
     number,
-    zipCode,
+    zipcode,
     phone,
   }: IStoreCreate) => {
     const storeRepository = AppDataSource.getRepository(Store);
@@ -30,7 +30,7 @@ export default class CreateStoreService {
     store.street = street;
     store.district = district;
     store.number = number;
-    store.zipCode = zipCode;
+    store.zipcode = zipcode;
     store.phone = phone;
 
     storeRepository.create(store);

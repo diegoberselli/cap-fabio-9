@@ -5,7 +5,7 @@ export interface IStore {
   street: string;
   district: string;
   number: string;
-  zipCode: string;
+  zipcode: string;
   phone: string;
 }
 
@@ -15,7 +15,7 @@ export interface IStoreCreate {
   street: string;
   district: string;
   number: string;
-  zipCode: string;
+  zipcode: string;
   phone: string;
 }
 

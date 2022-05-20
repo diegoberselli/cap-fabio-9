@@ -11,7 +11,7 @@ export default class UpdateStoreService {
     street,
     district,
     number,
-    zipCode,
+    zipcode,
     phone,
   }: IStore) => {
     const storeRepository = AppDataSource.getRepository(Store);
@@ -25,7 +25,7 @@ export default class UpdateStoreService {
     street ? (store.street = street) : store.street;
     district ? (store.district = district) : store.district;
     number ? (store.number = number) : store.number;
-    zipCode ? (store.zipCode = zipCode) : store.zipCode;
+    zipcode ? (store.zipcode = zipcode) : store.zipcode;
     phone ? (store.phone = phone) : store.phone;
 
     return storeRepository.save(store);

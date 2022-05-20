@@ -41,7 +41,7 @@ export class Store {
     length: 10,
     nullable: false,
   })
-  zipCode: string;
+  zipcode: string;
 
   @Column({
     length: 20,
