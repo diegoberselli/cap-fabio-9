@@ -11,8 +11,4 @@ app.get("/", (request, response) => {
   response.send("Hello World")
 })
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log("Running at 3000");
-  });
-
-  export default app;
+export default app;
