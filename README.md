@@ -670,6 +670,242 @@ Vazio
 }
 ```
 
+#
+
+#
+
+#
+
+---
+
+## 3. **Storage**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto Storage é definido como:
+
+| Campo            | Tipo   | Descrição                       |
+| ---------------- | ------ | ------------------------------- |
+| id               | string | Identificador único do estoque. |
+| store_id         | string | Identificador da loja.          |
+| product_id       | string | Identificador do produto.       |
+| storage_quantity | number | Quantidade do estoque da loja.  |
+
+### Endpoints
+
+| Método | Rota         | Descrição                                                       |
+| ------ | ------------ | --------------------------------------------------------------- |
+| POST   | /storage     | Cria e adiciona quantidade ao estoque da loja.                  |
+| GET    | /storage     | Listar todos estoques e quantidades.                            |
+| GET    | /storage/:id | Lista um estoque e sua quantidade, usando seu ID como parâmetro |
+| PATCH  | /storage/:id | Atualiza a quantidade do estoque, usando seu ID como parâmetro  |
+| DELETE | /storage/:id | Deleta um estoque, usando seu ID como parâmetro                 |
+
+---
+
+### 3.1. **Criação do estoque**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/storage`
+
+### Exemplo de Request:
+
+```
+POST /storage
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+{
+  "storage_quantity": 100
+}
+```
+
+### Exemplo de Response:
+
+```
+201 Created
+```
+
+```json
+{
+  "id": "00f2a067-5ebc-4bdb-b8b0-6f6fef64c0bd",
+  "storage_quantity": 100
+}
+```
+
+### 3.2. **Listando Estoque**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/storage`
+
+### Exemplo de Request:
+
+```
+GET /storage
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+  {
+    "id": "00f2a067-5ebc-4bdb-b8b0-6f6fef64c0bd",
+    "storage_quantity": 100
+  }
+]
+```
+
+### Possíveis Erros:
+
+Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
+
+---
+
+### 3.3. **Listar estoque por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/storage/:id`
+
+### Exemplo de Request:
+
+```
+GET /storage/00f2a067-5ebc-4bdb-b8b0-6f6fef64c0bd
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único do estoque |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "id": "00f2a067-5ebc-4bdb-b8b0-6f6fef64c0bd",
+  "storage_quantity": 100
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição         |
+| -------------- | ----------------- |
+| 404 Not Found  | storage not found |
+
+### 3.4. **Atualizar estoque por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/storage/:id`
+
+### Exemplo de Request:
+
+```
+PATCH /storage/00f2a067-5ebc-4bdb-b8b0-6f6fef64c0bd
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único do estoque |
+
+### Corpo da Requisição:
+
+```json
+{
+  "storage_quantity": 300
+}
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "storage_quantity": 300
+}
+```
+
+### 3.5. **Deletar estoque por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/storage/:id`
+
+### Exemplo de Request:
+
+```
+DELETE /storage/00f2a067-5ebc-4bdb-b8b0-6f6fef64c0bd
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único do estoque |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "message": "Storage deleted with sucess!"
+}
+```
 
 #
 
