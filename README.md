@@ -125,6 +125,7 @@ Por enquanto, não foi implementada autenticação.
   - [DELETE - /store/:id](#15-deletar-loja-por-id)
 - [Products](#2-products)
 - [Orders](#3-orders)
+- [Storage](#4-storage)
 
 ---
 
@@ -420,24 +421,23 @@ Vazio
 
 O objeto Product é definido como:
 
-| Campo       | Tipo   | Descrição                                           |
-| ----------- | ------ | --------------------------------------------------- |
-| id          | string | Identificador único do produto.                     |
-| name        | string | Nome do produto.                                    |
-| description | string | Uma breve descrição do produto.                     |
-| price       | number | O preço do produto.                                 |
-| category    | string | Categoria em que o produto se encaixa.              |
-
+| Campo       | Tipo   | Descrição                              |
+| ----------- | ------ | -------------------------------------- |
+| id          | string | Identificador único do produto.        |
+| name        | string | Nome do produto.                       |
+| description | string | Uma breve descrição do produto.        |
+| price       | number | O preço do produto.                    |
+| category    | string | Categoria em que o produto se encaixa. |
 
 ### Endpoints
 
-| Método | Rota          | Descrição                                                               |
-| ------ | ------------- | ----------------------------------------------------------------------- |
-| POST   | /products     | Criação de um produto.                                                  |
-| GET    | /products     | Lista todos os produtos.                                                |
-| GET    | /products/:id | Lista um produto, usando seu ID como parâmetro                          |
-| PATCH  | /products/:id | Atualiza uma ou mais propriedades, usando seu ID como parâmetro         |
-| DELETE | /products/:id | Deleta um prdouto, usando seu ID como parâmetro                         |
+| Método | Rota          | Descrição                                                       |
+| ------ | ------------- | --------------------------------------------------------------- |
+| POST   | /products     | Criação de um produto.                                          |
+| GET    | /products     | Lista todos os produtos.                                        |
+| GET    | /products/:id | Lista um produto, usando seu ID como parâmetro                  |
+| PATCH  | /products/:id | Atualiza uma ou mais propriedades, usando seu ID como parâmetro |
+| DELETE | /products/:id | Deleta um prdouto, usando seu ID como parâmetro                 |
 
 ---
 
@@ -462,7 +462,7 @@ Content-type: application/json
 {
   "name": "nome do produto",
   "description": "descrição do produto",
-  "price": 2000,                           // (valor numerico referente ao preço)
+  "price": 2000, // (valor numerico referente ao preço)
   "category": "categoria do produto"
 }
 ```
@@ -478,16 +478,16 @@ Content-type: application/json
   "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
   "name": "nome do produto",
   "description": "descrição do produto",
-  "price": 2000 ,
+  "price": 2000,
   "category": "categoria do produto"
 }
 ```
 
 ### Possíveis Erros:
 
-| Código do Erro | Descrição                                            |
-| -------------- | ---------------------------------------------------- |
-| 409 Conflict   | This product already exists in your database         |
+| Código do Erro | Descrição                                    |
+| -------------- | -------------------------------------------- |
+| 409 Conflict   | This product already exists in your database |
 
 ---
 
@@ -521,12 +521,12 @@ Vazio
 ```json
 [
   {
-  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-  "name": "nome do produto",
-  "description": "descrição do produto",
-  "price": 2000 ,
-  "category": "categoria do produto"
- }
+    "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+    "name": "nome do produto",
+    "description": "descrição do produto",
+    "price": 2000,
+    "category": "categoria do produto"
+  }
 ]
 ```
 
@@ -553,9 +553,9 @@ Content-type: application/json
 
 ### Parâmetros da Requisição:
 
-| Parâmetro | Tipo   | Descrição                           |
-| --------- | ------ | ----------------------------------- |
-| id        | string | Identificador único de produto      |
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único de produto |
 
 ### Corpo da Requisição:
 
@@ -574,9 +574,9 @@ Vazio
   "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
   "name": "nome do produto",
   "description": "descrição do produto",
-  "price": 2000 ,
+  "price": 2000,
   "category": "categoria do produto"
- }
+}
 ```
 
 ### Possíveis Erros:
@@ -602,9 +602,9 @@ Content-type: application/json
 
 ### Parâmetros da Requisição:
 
-| Parâmetro | Tipo   | Descrição                           |
-| --------- | ------ | ----------------------------------- |
-| id        | string | Identificador único de produto      |
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único de produto |
 
 ### Corpo da Requisição:
 
@@ -626,9 +626,9 @@ Content-type: application/json
   "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
   "name": "nome do produto atualizado",
   "description": "descrição do produto",
-  "price": 2000 ,
+  "price": 2000,
   "category": "categoria do produto atualizado"
- }
+}
 ```
 
 ### 1.5. **Deletar produto por ID**
@@ -648,9 +648,271 @@ Content-type: application/json
 
 ### Parâmetros da Requisição:
 
-| Parâmetro | Tipo   | Descrição                           |
-| --------- | ------ | ----------------------------------- |
-| id        | string | Identificador único do product      |
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único do product |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "message": "product deleted with sucess!"
+}
+```
+
+#
+
+#
+
+#
+
+---
+
+## 3. **Storage**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto Storage é definido como:
+
+| Campo            | Tipo   | Descrição                       |
+| ---------------- | ------ | ------------------------------- |
+| id               | string | Identificador único do estoque. |
+| store_id         | string | Id da loja.                     |
+| product_id       | string | Id do produto.                  |
+| storage_quantity | number | Quantidade do estoque da loja.  |
+
+### Endpoints
+
+| Método | Rota          | Descrição                                                       |
+| ------ | ------------- | --------------------------------------------------------------- |
+| POST   | /products     | Criação de um produto.                                          |
+| GET    | /products     | Lista todos os produtos.                                        |
+| GET    | /products/:id | Lista um produto, usando seu ID como parâmetro                  |
+| PATCH  | /products/:id | Atualiza uma ou mais propriedades, usando seu ID como parâmetro |
+| DELETE | /products/:id | Deleta um prdouto, usando seu ID como parâmetro                 |
+
+---
+
+### 1.1. **Criação de produto**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/products`
+
+### Exemplo de Request:
+
+```
+POST /products
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+{
+  "name": "nome do produto",
+  "description": "descrição do produto",
+  "price": 2000, // (valor numerico referente ao preço)
+  "category": "categoria do produto"
+}
+```
+
+### Exemplo de Response:
+
+```
+201 Created
+```
+
+```json
+{
+  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+  "name": "nome do produto",
+  "description": "descrição do produto",
+  "price": 2000,
+  "category": "categoria do produto"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                                    |
+| -------------- | -------------------------------------------- |
+| 409 Conflict   | This product already exists in your database |
+
+---
+
+### 1.2. **Listando produtos**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/products`
+
+### Exemplo de Request:
+
+```
+GET /products
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+  {
+    "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+    "name": "nome do produto",
+    "description": "descrição do produto",
+    "price": 2000,
+    "category": "categoria do produto"
+  }
+]
+```
+
+### Possíveis Erros:
+
+Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
+
+---
+
+### 1.3. **Listar produto por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/products/:id`
+
+### Exemplo de Request:
+
+```
+GET /products/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único de produto |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+  "name": "nome do produto",
+  "description": "descrição do produto",
+  "price": 2000,
+  "category": "categoria do produto"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição         |
+| -------------- | ----------------- |
+| 404 Not Found  | product not found |
+
+### 1.4. **Atualizar produto por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/products/:id`
+
+### Exemplo de Request:
+
+```
+PATCH /products/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único de produto |
+
+### Corpo da Requisição:
+
+```json
+{
+  "name": "nome do produto atualizado",
+  "category": "categoria do produto atualizado"
+}
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+  "name": "nome do produto atualizado",
+  "description": "descrição do produto",
+  "price": 2000,
+  "category": "categoria do produto atualizado"
+}
+```
+
+### 1.5. **Deletar produto por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/products/:id`
+
+### Exemplo de Request:
+
+```
+DELETE /products/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único do product |
 
 ### Corpo da Requisição:
 
