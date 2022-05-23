@@ -125,6 +125,7 @@ Por enquanto, não foi implementada autenticação.
   - [DELETE - /store/:id](#15-deletar-loja-por-id)
 - [Products](#2-products)
 - [Orders](#3-orders)
+- [Storage](#4-storage)
 
 ---
 
@@ -420,24 +421,23 @@ Vazio
 
 O objeto Product é definido como:
 
-| Campo       | Tipo   | Descrição                                           |
-| ----------- | ------ | --------------------------------------------------- |
-| id          | string | Identificador único do produto.                     |
-| name        | string | Nome do produto.                                    |
-| description | string | Uma breve descrição do produto.                     |
-| price       | number | O preço do produto.                                 |
-| category    | string | Categoria em que o produto se encaixa.              |
-
+| Campo       | Tipo   | Descrição                              |
+| ----------- | ------ | -------------------------------------- |
+| id          | string | Identificador único do produto.        |
+| name        | string | Nome do produto.                       |
+| description | string | Uma breve descrição do produto.        |
+| price       | number | O preço do produto.                    |
+| category    | string | Categoria em que o produto se encaixa. |
 
 ### Endpoints
 
-| Método | Rota          | Descrição                                                               |
-| ------ | ------------- | ----------------------------------------------------------------------- |
-| POST   | /products     | Criação de um produto.                                                  |
-| GET    | /products     | Lista todos os produtos.                                                |
-| GET    | /products/:id | Lista um produto, usando seu ID como parâmetro                          |
-| PATCH  | /products/:id | Atualiza uma ou mais propriedades, usando seu ID como parâmetro         |
-| DELETE | /products/:id | Deleta um prdouto, usando seu ID como parâmetro                         |
+| Método | Rota          | Descrição                                                       |
+| ------ | ------------- | --------------------------------------------------------------- |
+| POST   | /products     | Criação de um produto.                                          |
+| GET    | /products     | Lista todos os produtos.                                        |
+| GET    | /products/:id | Lista um produto, usando seu ID como parâmetro                  |
+| PATCH  | /products/:id | Atualiza uma ou mais propriedades, usando seu ID como parâmetro |
+| DELETE | /products/:id | Deleta um prdouto, usando seu ID como parâmetro                 |
 
 ---
 
@@ -462,7 +462,7 @@ Content-type: application/json
 {
   "name": "nome do produto",
   "description": "descrição do produto",
-  "price": 2000,                           // (valor numerico referente ao preço)
+  "price": 2000, // (valor numerico referente ao preço)
   "category": "categoria do produto"
 }
 ```
@@ -478,16 +478,16 @@ Content-type: application/json
   "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
   "name": "nome do produto",
   "description": "descrição do produto",
-  "price": 2000 ,
+  "price": 2000,
   "category": "categoria do produto"
 }
 ```
 
 ### Possíveis Erros:
 
-| Código do Erro | Descrição                                            |
-| -------------- | ---------------------------------------------------- |
-| 409 Conflict   | This product already exists in your database         |
+| Código do Erro | Descrição                                    |
+| -------------- | -------------------------------------------- |
+| 409 Conflict   | This product already exists in your database |
 
 ---
 
@@ -521,12 +521,12 @@ Vazio
 ```json
 [
   {
-  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-  "name": "nome do produto",
-  "description": "descrição do produto",
-  "price": 2000 ,
-  "category": "categoria do produto"
- }
+    "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+    "name": "nome do produto",
+    "description": "descrição do produto",
+    "price": 2000,
+    "category": "categoria do produto"
+  }
 ]
 ```
 
@@ -553,9 +553,9 @@ Content-type: application/json
 
 ### Parâmetros da Requisição:
 
-| Parâmetro | Tipo   | Descrição                           |
-| --------- | ------ | ----------------------------------- |
-| id        | string | Identificador único de produto      |
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único de produto |
 
 ### Corpo da Requisição:
 
@@ -574,9 +574,9 @@ Vazio
   "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
   "name": "nome do produto",
   "description": "descrição do produto",
-  "price": 2000 ,
+  "price": 2000,
   "category": "categoria do produto"
- }
+}
 ```
 
 ### Possíveis Erros:
@@ -602,9 +602,9 @@ Content-type: application/json
 
 ### Parâmetros da Requisição:
 
-| Parâmetro | Tipo   | Descrição                           |
-| --------- | ------ | ----------------------------------- |
-| id        | string | Identificador único de produto      |
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único de produto |
 
 ### Corpo da Requisição:
 
@@ -626,9 +626,9 @@ Content-type: application/json
   "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
   "name": "nome do produto atualizado",
   "description": "descrição do produto",
-  "price": 2000 ,
+  "price": 2000,
   "category": "categoria do produto atualizado"
- }
+}
 ```
 
 ### 1.5. **Deletar produto por ID**
@@ -648,9 +648,9 @@ Content-type: application/json
 
 ### Parâmetros da Requisição:
 
-| Parâmetro | Tipo   | Descrição                           |
-| --------- | ------ | ----------------------------------- |
-| id        | string | Identificador único do product      |
+| Parâmetro | Tipo   | Descrição                      |
+| --------- | ------ | ------------------------------ |
+| id        | string | Identificador único do product |
 
 ### Corpo da Requisição:
 
@@ -669,6 +669,7 @@ Vazio
   "message": "product deleted with sucess!"
 }
 ```
+
 
 #
 
