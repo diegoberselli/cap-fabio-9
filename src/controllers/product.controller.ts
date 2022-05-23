@@ -12,8 +12,6 @@ export default class ProductController {
     static store = async(request: Request, response: Response) => {
         const{ name, description, price, category } = request.body;
 
-        console.log('controller, chegou aqui')
-
         const product = await CreateProductService.execute({category, description, name, price});
 
         return response.status(201).json(product);

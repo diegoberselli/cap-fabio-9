@@ -11,7 +11,7 @@ app.use(handleError);
 appRoutes(app);
 
 app.get("/", (request, response) => {
-  response.send("Hello World")
-})
+  response.send("Hello World");
+});
 
 export default app;

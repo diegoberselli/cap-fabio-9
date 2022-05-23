@@ -1,50 +1,57 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryColumn, Column } from "typeorm";
+import { v4 as uuid } from "uuid";
 
-@Entity("stores")
+@Entity("store")
 export class Store {
-  @PrimaryGeneratedColumn("uuid")
-  id: number;
+  @PrimaryColumn("uuid")
+  readonly id: string;
 
   @Column({
     nullable: false,
     unique: true,
     length: 50,
   })
-  filial: string;
+  branch: string;
 
   @Column({
     length: 150,
     nullable: false,
   })
-  cidade: string;
+  city: string;
 
   @Column({
     length: 150,
     nullable: false,
   })
-  rua: string;
+  street: string;
 
   @Column({
     length: 150,
     nullable: false,
   })
-  bairro: string;
+  district: string;
 
   @Column({
     length: 10,
     nullable: false,
   })
-  numero: string;
+  number: string;
 
   @Column({
     length: 10,
     nullable: false,
   })
-  cep: string;
+  zipcode: string;
 
   @Column({
     length: 20,
     nullable: false,
   })
-  telefone: string;
+  phone: string;
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuid();
+    }
+  }
 }

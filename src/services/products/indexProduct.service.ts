@@ -12,6 +12,7 @@ export default class IndexProductService {
         const productRepository = AppDataSource.getRepository(Product);
         const product = await productRepository.findOne({where:{id}})
 
+        return product
     }
 
 }
