@@ -6,6 +6,16 @@ export class Storage {
   @PrimaryColumn("uuid")
   readonly id: string;
 
+  // @Column({
+  //   length: 50,
+  // })
+  // store_id: string;
+
+  // @Column({
+  //   length: 50,
+  // })
+  // product_id: string;
+
   @Column()
   storage_quantity: number;
 
