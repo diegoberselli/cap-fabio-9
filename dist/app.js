@@ -13,6 +13,5 @@ app.use(handleError_1.handleError);
 (0, routes_1.appRoutes)(app);
 app.get("/", (request, response) => {
     response.send("Hello World");
-    console.log('aqui', process.env.NODE_ENV);
 });
 exports.default = app;
