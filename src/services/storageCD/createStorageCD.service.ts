@@ -1,12 +1,13 @@
 import { AppDataSource } from "../../data-source";
-import { Product } from "../../entities/product.entity";
+import { Cd } from "../../entities/storageCdProducts.entity";
 import { AppError } from "../../errors/AppError";
 import { IProductCreate } from "../../interfaces/products";
 
-export default class CreateProductService {
+export default class CreateStorageCDService {
 
     static execute = async({name, description, price, category}: IProductCreate) => {
         const productRepository = AppDataSource.getRepository(Product);
+        console.log("service", productRepository)
         
         const productAlreadyExists = await productRepository.findOne({where:{name}});
         
