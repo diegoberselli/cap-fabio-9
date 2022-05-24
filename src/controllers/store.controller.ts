@@ -54,6 +54,6 @@ export default class StoreController {
 
     const deletedStore = await deleteStoreService.execute({ id });
 
-    return response.status(200).json({ message: "Store deleted with sucess!" });
+    return response.status(204).json();
   };
 }

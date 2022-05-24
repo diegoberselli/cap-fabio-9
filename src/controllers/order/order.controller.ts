@@ -46,8 +46,6 @@ export default class OrderController {
     const { id_order_product } = req.body;
     const order = await OrderDelete.execute(id_order_product);
 
-    return res
-      .status(200)
-      .json({ message: "Order deleted successfully", order: order });
+    return res.status(204).json();
   }
 }
