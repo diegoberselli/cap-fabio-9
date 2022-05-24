@@ -1,30 +1,27 @@
 import { AppDataSource } from "../../data-source";
 import { Cd } from "../../entities/storageCdProducts.entity";
 import { AppError } from "../../errors/AppError";
-import { IProductCreate } from "../../interfaces/products";
+import { IProductCdCreate } from "../../interfaces/storageCD";
 
-export default class CreateStorageCDService {
 
-    static execute = async({name, description, price, category}: IProductCreate) => {
-        const productRepository = AppDataSource.getRepository(Product);
-        console.log("service", productRepository)
+export default class CreateProductCDService {
+
+    static execute = async({product_id, cd_quantity}:IProductCdCreate) => {
+        const cdRepository = AppDataSource.getRepository(Cd);
         
-        const productAlreadyExists = await productRepository.findOne({where:{name}});
-        
+        const productAlreadyExists = await cdRepository.findOne({where:{product_id}});
+
         if(productAlreadyExists){
-            throw new AppError(409, 'Product already Exists');
+            throw new AppError(409, 'This product already exists in CD, please change the amount of them');
         }
 
-        const product = new Product();
-        product.name = name;
-        product.price = price;
-        product.description = description;
-        product.category =  category;
+        const cdProduct = new Cd();
+        cdProduct.product_id = product_id;
+        cdProduct.cd_quantity = cd_quantity;
 
-        productRepository.create(product);
-        await productRepository.save(product);
+        cdRepository.create(cdProduct);
+        await cdRepository.save(cdProduct);
 
-        return product;
-
+        return cdProduct;
     }
 }
