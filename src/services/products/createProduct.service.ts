@@ -5,7 +5,7 @@ import { IProductCreate } from "../../interfaces/products";
 
 export default class CreateProductService {
 
-    static execute = async({name, description, price, category}: IProductCreate) => {
+    static execute = async({name, description, price, category, img_URL}: IProductCreate) => {
         const productRepository = AppDataSource.getRepository(Product);
         
         const productAlreadyExists = await productRepository.findOne({where:{name}});
@@ -19,6 +19,7 @@ export default class CreateProductService {
         product.price = price;
         product.description = description;
         product.category =  category;
+        product.img_URL = img_URL;
 
         productRepository.create(product);
         await productRepository.save(product);

@@ -10,9 +10,9 @@ import UpdateProductService from '../services/products/updateProduct.service';
  
 export default class ProductController {
     static store = async(request: Request, response: Response) => {
-        const{ name, description, price, category } = request.body;
+        const{ name, description, price, category, img_URL } = request.body;
 
-        const product = await CreateProductService.execute({category, description, name, price});
+        const product = await CreateProductService.execute({category, description, name, price, img_URL});
 
         return response.status(201).json(product);
 
@@ -35,10 +35,10 @@ export default class ProductController {
     }
  
     static update = async(request: Request, response: Response) => {
-        const { name, price, description, category } = request.body;
+        const { name, price, description, category, img_URL } = request.body;
         const { id } = request.params;
 
-        const updatedProduct = await UpdateProductService.execute({id, name, price, description, category});
+        const updatedProduct = await UpdateProductService.execute({id, name, price, description, category, img_URL});
 
         return response.json(updatedProduct);
     }
