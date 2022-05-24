@@ -1,4 +1,4 @@
-import { Router } from "express";
+/*import { Router } from "express";
 import OrderController from "../../controllers/order/order.controller";
 
 const router = Router();
@@ -10,4 +10,4 @@ export const orderRouter = () => {
   router.get("/update", OrderController.update);
   router.delete("/delete", OrderController.delete);
   return router;
-};
+};*/

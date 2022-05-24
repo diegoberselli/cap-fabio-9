@@ -1,4 +1,4 @@
-import { Order } from "../../entities/order.entity";
+/*import { Order } from "../../entities/order.entity";
 import { AppError } from "../../errors/AppError";
 import { AppDataSource } from "../../data-source";
 import { ProductOrder } from "../../entities/productOrder.entity";
@@ -122,7 +122,9 @@ export class OrderDelete {
 
     return order;
   }
+}*/
 }
 function IOrderObjectId(id: any, IOrderObjectId: any) {
   throw new Error("Function not implemented.");
 }
+
