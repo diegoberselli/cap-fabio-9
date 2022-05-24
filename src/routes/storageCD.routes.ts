@@ -1,5 +1,5 @@
 import { Router } from "express";
-import StorageCDController from "../controllers/storageCD.controler";
+import StorageCDController from "../controllers/storageCD.controller";
 
 const router = Router();
 

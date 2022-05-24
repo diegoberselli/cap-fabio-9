@@ -40,8 +40,6 @@ export default class StorageStoreProductController {
 
     const deletedStore = await deleteStorageStoreProductService.execute({ id });
 
-    return response
-      .status(200)
-      .json({ message: "Storage deleted with sucess!" });
+    return response.status(204).json();
   };
 }

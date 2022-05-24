@@ -9,9 +9,10 @@ import { Request, Response } from "express";
 
 export default class OrderController {
   static async create(req: Request, res: Response) {
-    const { id_order_product } = req.body;
+    const { storeId, productArray } = req.body;
+    console.log(productArray);
 
-    const order = await OrderCreate.execute(id_order_product);
+    const order = await OrderCreate.execute({ storeId, productArray });
 
     return res.status(201).json(order);
   }
@@ -45,8 +46,6 @@ export default class OrderController {
     const { id_order_product } = req.body;
     const order = await OrderDelete.execute(id_order_product);
 
-    return res
-      .status(200)
-      .json({ message: "Order deleted successfully", order: order });
+    return res.status(204).json();
   }
 }*/

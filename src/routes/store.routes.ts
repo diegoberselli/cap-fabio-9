@@ -1,10 +1,16 @@
 import { Router } from "express";
 import StoreController from "../controllers/store.controller";
+import { expressYupMiddleware } from "express-yup-middleware";
+import createStoretValidation from "../validators/store/createStore.validation";
 
 const router = Router();
 
 export const storeRouter = () => {
-  router.post("", StoreController.store);
+  router.post(
+    "",
+    expressYupMiddleware({ schemaValidator: createStoretValidation }),
+    StoreController.store
+  );
   router.get("", StoreController.list);
   router.get("/:id", StoreController.index);
   router.patch("/:id", StoreController.update);
