@@ -20,23 +20,30 @@ export class OrderCreate {
       productIds.push(product.id);
     });
 
-    //tratamento de erro caso o json não seja o esperado no foreach
-
     const products = await productsRepository.findBy({ id: In(productIds) });
 
     if (!products[products.length - 1]) {
       throw new AppError(404, "Invalid list of ids");
     }
 
+    //conferir se existe algum produto que seja cd, se pelo menos um existir,
+    //o pedido vai receber order.status = "pending"
+    //caso contrário pode receber o order.status="finished"
+
+    //rota patch para atualizar que recebe o id do local que esta atualizando se for
+    //o cd atualiza para in transit caso não seja o cd atualiza para finished
+
+    const amount = productArray.reduce(
+      (acc, item) => acc + item.price_product * item.quantity_product_order,
+      0
+    );
+
     const order = new Order();
     order.storeId = storeId;
     order.created_at = new Date();
     order.update_at = new Date();
-    order.amount = 1;
-    order.status = "a";
-    //percorrer a lista de productIds , procurando correspondencia no product repository
-    //fazer um reduce
-    //adicionar no amount do pedido
+    order.amount = amount;
+    order.status = "pending";
 
     orderRepository.create(order);
     await orderRepository.save(order);

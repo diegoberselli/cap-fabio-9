@@ -1,10 +1,10 @@
 export interface IProductCreate {
-    name: string;
-    description: string;
-    price: number;
-    category: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
 }
 
 export interface IProduct extends IProductCreate {
-    id: string;
+  id: string;
 }
