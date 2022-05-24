@@ -9,9 +9,10 @@ import { Request, Response } from "express";
 
 export default class OrderController {
   static async create(req: Request, res: Response) {
-    const { id_order_product } = req.body;
+    const { storeId, productArray } = req.body;
+    console.log(productArray);
 
-    const order = await OrderCreate.execute(id_order_product);
+    const order = await OrderCreate.execute({ storeId, productArray });
 
     return res.status(201).json(order);
   }
