@@ -7,7 +7,6 @@ export default class CreateProductService {
 
     static execute = async({name, description, price, category}: IProductCreate) => {
         const productRepository = AppDataSource.getRepository(Product);
-        console.log("service", productRepository)
         
         const productAlreadyExists = await productRepository.findOne({where:{name}});
         
