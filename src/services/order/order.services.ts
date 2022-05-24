@@ -123,8 +123,3 @@ export class OrderDelete {
     return order;
   }
 }*/
-}
-function IOrderObjectId(id: any, IOrderObjectId: any) {
-  throw new Error("Function not implemented.");
-}
-

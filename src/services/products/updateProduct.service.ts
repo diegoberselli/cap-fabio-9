@@ -5,7 +5,7 @@ import { IProduct } from "../../interfaces/products";
 
 export default class UpdateProductService {
 
-    static execute = async({description, category, id, name, price}: IProduct) => {
+    static execute = async({description, category, id, name, price, img_URL}: IProduct) => {
         
         const productRepository = AppDataSource.getRepository(Product);    
         
@@ -19,6 +19,7 @@ export default class UpdateProductService {
         name ? (product.name = name) : product.name;
         description ? (product.description = description) : product.description;
         category ? (product.category = category) : product.category;
+        img_URL ? (product.img_URL = img_URL) : product.img_URL 
 
         await productRepository.save(product);
 
