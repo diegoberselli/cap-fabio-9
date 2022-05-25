@@ -123,8 +123,20 @@ Por enquanto, não foi implementada autenticação.
   - [GET - /store/:id](#13-listando-uma-loja)
   - [PATCH - /store/:id](#14-atualizar-loja-por-id)
   - [DELETE - /store/:id](#15-deletar-loja-por-id)
+  - [GET - /store/orders/:id](#16-listando-orders-da-loja)
 - [Products](#2-products)
+  - [POST - /products](#11-criação-de-produto)
+  - [GET - /products](#12-listando-produtos)
+  - [GET - /products/:id](#13-listando-um-produto)
+  - [PATCH - /products/:id](#14-atualizar-produto-por-id)
+  - [DELETE - /products/:id](#15-deletar-produto-por-id)
 - [Orders](#3-orders)
+  - [POST - /order](#17-criação-de-pedido)
+  - [GET - /order](#18-listando-pedidos)
+  - [GET - /order/:id](#19-listando-um-pedido)
+  - [PATCH - /order/:id](#20-atualizar-pedido-por-id)
+  - [DELETE - /order/:id](#21-deletar-pedido-por-id)
+  - [GET - /order/status/:status](#22-listando-pedidos-por-status)
 - [Storage](#4-storage)
 
 ---
@@ -135,26 +147,29 @@ Por enquanto, não foi implementada autenticação.
 
 O objeto Store é definido como:
 
-| Campo    | Tipo   | Descrição                                              |
-| -------- | ------ | ------------------------------------------------------ |
-| id       | string | Identificador único da loja                            |
-| branch   | string | Identificador de filial da loja.                       |
-| city     | string | A cidade onde a loja está alocada.                     |
-| street   | string | A rua/travessa/avenida onde a loja está alocada        |
-| district | string | O bairro/jardim onde a loja está alocada               |
-| number   | string | O número do prédio/construção onde a loja está alocada |
-| zipcode  | string | O código postal de onde a loja está alocada            |
-| phone    | string | Telefone principal de contato da loja                  |
+| Campo      | Tipo   | Descrição                                              |
+| ---------- | ------ | ------------------------------------------------------ |
+| id         | string | Identificador único da loja                            |
+| branch     | string | Identificador de filial da loja.                       |
+| city       | string | A cidade onde a loja está alocada.                     |
+| street     | string | A rua/travessa/avenida onde a loja está alocada        |
+| district   | string | O bairro/jardim onde a loja está alocada               |
+| number     | string | O número do prédio/construção onde a loja está alocada |
+| zipcode    | string | O código postal de onde a loja está alocada            |
+| phone      | string | Telefone principal de contato da loja                  |
+| create_At  | string | Data e hora que a loja foi criada                      |
+| updated_At | string | Data e hora que a loja foi atualizada                  |
 
 ### Endpoints
 
-| Método | Rota       | Descrição                                                               |
-| ------ | ---------- | ----------------------------------------------------------------------- |
-| POST   | /store     | Criação de uma loja.                                                    |
-| GET    | /store     | Lista todos as lojas.                                                   |
-| GET    | /store/:id | Lista uma loja, usando seu ID como parâmetro                            |
-| PATCH  | /store/:id | Atualiza uma ou mais propriedades da loja, usando seu ID como parâmetro |
-| DELETE | /store/:id | Deleta uma loja, usando seu ID como parâmetro                           |
+| Método | Rota              | Descrição                                                               |
+| ------ | ----------------- | ----------------------------------------------------------------------- |
+| POST   | /store            | Criação de uma loja.                                                    |
+| GET    | /store            | Lista todos as lojas.                                                   |
+| GET    | /store/:id        | Lista uma loja, usando seu ID como parâmetro                            |
+| GET    | /store/orders/:id | Lista todos os pedidos daquela loja, usando seu ID como parâmetro       |
+| PATCH  | /store/:id        | Atualiza uma ou mais propriedades da loja, usando seu ID como parâmetro |
+| DELETE | /store/:id        | Deleta uma loja, usando seu ID como parâmetro                           |
 
 ---
 
@@ -195,14 +210,16 @@ Content-type: application/json
 
 ```json
 {
-  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-  "branch": "filial1",
+  "id": "f8037574-a607-47f7-806a-4754302851ac",
+  "branch": "filiac3",
   "city": "cidade-sp",
-  "street": "uma rua na cidade sp",
-  "district": "um bairro",
-  "number": "987",
-  "zipcode": "22506-300",
-  "phone": "12345678"
+  "street": "rua: uma rua na cidade sp",
+  "district": "bairro: um bairro",
+  "number": "123",
+  "zipcode": "123456",
+  "phone": "123456",
+  "created_at": "2022-05-25T16:47:25.595Z",
+  "update_at": "2022-05-25T16:47:25.595Z"
 }
 ```
 
@@ -244,14 +261,16 @@ Vazio
 ```json
 [
   {
-    "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-    "branch": "filial1",
+    "id": "f8037574-a607-47f7-806a-4754302851ac",
+    "branch": "filiac3",
     "city": "cidade-sp",
-    "street": "uma rua na cidade sp",
-    "district": "um bairro",
-    "number": "987",
-    "zipcode": "22506-300",
-    "phone": "12345678"
+    "street": "rua: uma rua na cidade sp",
+    "district": "bairro: um bairro",
+    "number": "123",
+    "zipcode": "123456",
+    "phone": "123456",
+    "created_at": "2022-05-25T16:47:25.595Z",
+    "update_at": "2022-05-25T16:47:25.595Z"
   }
 ]
 ```
@@ -297,14 +316,16 @@ Vazio
 
 ```json
 {
-  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-  "branch": "filial2",
+  "id": "f8037574-a607-47f7-806a-4754302851ac",
+  "branch": "filiac3",
   "city": "cidade-sp",
   "street": "rua: uma rua na cidade sp",
   "district": "bairro: um bairro",
   "number": "123",
   "zipcode": "123456",
-  "phone": "123456"
+  "phone": "123456",
+  "created_at": "2022-05-25T16:47:25.595Z",
+  "update_at": "2022-05-25T16:47:25.595Z"
 }
 ```
 
@@ -314,7 +335,66 @@ Vazio
 | -------------- | --------------- |
 | 404 Not Found  | Store not found |
 
-### 1.4. **Atualizar loja por ID**
+### 1.4. **Listando orders da loja**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/store/orders/:id`
+
+### Exemplo de Request:
+
+```
+GET /store/orders/f8037574-a607-47f7-806a-4754302851ac
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+ [
+	{
+		"id": "09e8834a-5290-4be5-b5d6-8eb0fc80b0e0",
+		"storeId": "f8037574-a607-47f7-806a-4754302851ac",
+		"amount": 100,
+		"status": "intransit",
+		"created_at": "2022-05-25T16:48:14.251Z",
+		"update_at": "2022-05-25T16:48:14.251Z",
+		"products": [
+			{
+				"id": "6c1fabf3-24cc-4c65-900c-32ff3b11ec31",
+				"price_product": 25,
+				"quantity_product_order": 2,
+				"directed_from_id": "2",
+				"product": {
+					"id": "6460053f-0126-414a-92b4-9af597d8705c",
+					"name": "pão",
+					"description": "descrição do produto",
+					"price": 10,
+					"category": "panificadora",
+					"img_URL": ""
+				}
+			}]}
+]
+```
+
+### Possíveis Erros:
+
+Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
+
+### 1.5. **Atualizar loja por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -364,11 +444,13 @@ Content-type: application/json
   "district": "um bairro atualizado",
   "number": "001",
   "zipcode": "22506-200",
-  "phone": "12345678"
+  "phone": "12345678",
+  "created_at": "2022-05-25T12:15:35.764Z",
+  "update_at": "2022-05-25T12:15:53.785Z"
 }
 ```
 
-### 1.5. **Deletar loja por ID**
+### 1.6. **Deletar loja por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
