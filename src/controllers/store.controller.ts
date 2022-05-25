@@ -4,6 +4,7 @@ import IndexStoreService from "../services/store/indexStore.service";
 import UpdateStoreService from "../services/store/updateStore.service";
 import listStoreService from "../services/store/listStore.service";
 import deleteStoreService from "../services/store/deleteStore.service";
+import IndexOrdersStoreService from "../services/store/indexOrdersStore.service";
 
 export default class StoreController {
   static store = async (request: Request, response: Response) => {
@@ -24,6 +25,12 @@ export default class StoreController {
   static list = async (request: Request, response: Response) => {
     const stores = await listStoreService.execute();
     return response.send(stores);
+  };
+
+  static indexOrders = async (request: Request, response: Response) => {
+    const { id } = request.params;
+    const store = await IndexOrdersStoreService.execute({ id });
+    return response.status(200).json(store);
   };
 
   static index = async (request: Request, response: Response) => {

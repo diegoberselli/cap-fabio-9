@@ -123,8 +123,20 @@ Por enquanto, não foi implementada autenticação.
   - [GET - /store/:id](#13-listando-uma-loja)
   - [PATCH - /store/:id](#14-atualizar-loja-por-id)
   - [DELETE - /store/:id](#15-deletar-loja-por-id)
+  - [GET - /store/orders/:id](#16-listando-orders-da-loja)
 - [Products](#2-products)
+  - [POST - /products](#11-criação-de-produto)
+  - [GET - /products](#12-listando-produtos)
+  - [GET - /products/:id](#13-listando-um-produto)
+  - [PATCH - /products/:id](#14-atualizar-produto-por-id)
+  - [DELETE - /products/:id](#15-deletar-produto-por-id)
 - [Orders](#3-orders)
+  - [POST - /order](#17-criação-de-pedido)
+  - [GET - /order](#18-listando-pedidos)
+  - [GET - /order/:id](#19-listando-um-pedido)
+  - [PATCH - /order/:id](#20-atualizar-pedido-por-id)
+  - [DELETE - /order/:id](#21-deletar-pedido-por-id)
+  - [GET - /order/status/:status](#22-listando-pedidos-por-status)
 - [Storage](#4-storage)
 
 ---
@@ -135,26 +147,29 @@ Por enquanto, não foi implementada autenticação.
 
 O objeto Store é definido como:
 
-| Campo    | Tipo   | Descrição                                              |
-| -------- | ------ | ------------------------------------------------------ |
-| id       | string | Identificador único da loja                            |
-| branch   | string | Identificador de filial da loja.                       |
-| city     | string | A cidade onde a loja está alocada.                     |
-| street   | string | A rua/travessa/avenida onde a loja está alocada        |
-| district | string | O bairro/jardim onde a loja está alocada               |
-| number   | string | O número do prédio/construção onde a loja está alocada |
-| zipcode  | string | O código postal de onde a loja está alocada            |
-| phone    | string | Telefone principal de contato da loja                  |
+| Campo      | Tipo   | Descrição                                              |
+| ---------- | ------ | ------------------------------------------------------ |
+| id         | string | Identificador único da loja                            |
+| branch     | string | Identificador de filial da loja.                       |
+| city       | string | A cidade onde a loja está alocada.                     |
+| street     | string | A rua/travessa/avenida onde a loja está alocada        |
+| district   | string | O bairro/jardim onde a loja está alocada               |
+| number     | string | O número do prédio/construção onde a loja está alocada |
+| zipcode    | string | O código postal de onde a loja está alocada            |
+| phone      | string | Telefone principal de contato da loja                  |
+| create_At  | string | Data e hora que a loja foi criada                      |
+| updated_At | string | Data e hora que a loja foi atualizada                  |
 
 ### Endpoints
 
-| Método | Rota       | Descrição                                                               |
-| ------ | ---------- | ----------------------------------------------------------------------- |
-| POST   | /store     | Criação de uma loja.                                                    |
-| GET    | /store     | Lista todos as lojas.                                                   |
-| GET    | /store/:id | Lista uma loja, usando seu ID como parâmetro                            |
-| PATCH  | /store/:id | Atualiza uma ou mais propriedades da loja, usando seu ID como parâmetro |
-| DELETE | /store/:id | Deleta uma loja, usando seu ID como parâmetro                           |
+| Método | Rota              | Descrição                                                               |
+| ------ | ----------------- | ----------------------------------------------------------------------- |
+| POST   | /store            | Criação de uma loja.                                                    |
+| GET    | /store            | Lista todos as lojas.                                                   |
+| GET    | /store/:id        | Lista uma loja, usando seu ID como parâmetro                            |
+| GET    | /store/orders/:id | Lista todos os pedidos daquela loja, usando seu ID como parâmetro       |
+| PATCH  | /store/:id        | Atualiza uma ou mais propriedades da loja, usando seu ID como parâmetro |
+| DELETE | /store/:id        | Deleta uma loja, usando seu ID como parâmetro                           |
 
 ---
 
@@ -195,14 +210,16 @@ Content-type: application/json
 
 ```json
 {
-  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-  "branch": "filial1",
+  "id": "f8037574-a607-47f7-806a-4754302851ac",
+  "branch": "filiac3",
   "city": "cidade-sp",
-  "street": "uma rua na cidade sp",
-  "district": "um bairro",
-  "number": "987",
-  "zipcode": "22506-300",
-  "phone": "12345678"
+  "street": "rua: uma rua na cidade sp",
+  "district": "bairro: um bairro",
+  "number": "123",
+  "zipcode": "123456",
+  "phone": "123456",
+  "created_at": "2022-05-25T16:47:25.595Z",
+  "update_at": "2022-05-25T16:47:25.595Z"
 }
 ```
 
@@ -244,14 +261,16 @@ Vazio
 ```json
 [
   {
-    "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-    "branch": "filial1",
+    "id": "f8037574-a607-47f7-806a-4754302851ac",
+    "branch": "filiac3",
     "city": "cidade-sp",
-    "street": "uma rua na cidade sp",
-    "district": "um bairro",
-    "number": "987",
-    "zipcode": "22506-300",
-    "phone": "12345678"
+    "street": "rua: uma rua na cidade sp",
+    "district": "bairro: um bairro",
+    "number": "123",
+    "zipcode": "123456",
+    "phone": "123456",
+    "created_at": "2022-05-25T16:47:25.595Z",
+    "update_at": "2022-05-25T16:47:25.595Z"
   }
 ]
 ```
@@ -297,14 +316,16 @@ Vazio
 
 ```json
 {
-  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-  "branch": "filial2",
+  "id": "f8037574-a607-47f7-806a-4754302851ac",
+  "branch": "filiac3",
   "city": "cidade-sp",
   "street": "rua: uma rua na cidade sp",
   "district": "bairro: um bairro",
   "number": "123",
   "zipcode": "123456",
-  "phone": "123456"
+  "phone": "123456",
+  "created_at": "2022-05-25T16:47:25.595Z",
+  "update_at": "2022-05-25T16:47:25.595Z"
 }
 ```
 
@@ -314,7 +335,66 @@ Vazio
 | -------------- | --------------- |
 | 404 Not Found  | Store not found |
 
-### 1.4. **Atualizar loja por ID**
+### 1.4. **Listando orders da loja**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/store/orders/:id`
+
+### Exemplo de Request:
+
+```
+GET /store/orders/f8037574-a607-47f7-806a-4754302851ac
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+ [
+	{
+		"id": "09e8834a-5290-4be5-b5d6-8eb0fc80b0e0",
+		"storeId": "f8037574-a607-47f7-806a-4754302851ac",
+		"amount": 100,
+		"status": "intransit",
+		"created_at": "2022-05-25T16:48:14.251Z",
+		"update_at": "2022-05-25T16:48:14.251Z",
+		"products": [
+			{
+				"id": "6c1fabf3-24cc-4c65-900c-32ff3b11ec31",
+				"price_product": 25,
+				"quantity_product_order": 2,
+				"directed_from_id": "2",
+				"product": {
+					"id": "6460053f-0126-414a-92b4-9af597d8705c",
+					"name": "pão",
+					"description": "descrição do produto",
+					"price": 10,
+					"category": "panificadora",
+					"img_URL": ""
+				}
+			}]}
+]
+```
+
+### Possíveis Erros:
+
+Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
+
+### 1.5. **Atualizar loja por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -364,11 +444,13 @@ Content-type: application/json
   "district": "um bairro atualizado",
   "number": "001",
   "zipcode": "22506-200",
-  "phone": "12345678"
+  "phone": "12345678",
+  "created_at": "2022-05-25T12:15:35.764Z",
+  "update_at": "2022-05-25T12:15:53.785Z"
 }
 ```
 
-### 1.5. **Deletar loja por ID**
+### 1.6. **Deletar loja por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -441,7 +523,7 @@ O objeto Product é definido como:
 
 ---
 
-### 1.1. **Criação de produto**
+### 2.1. **Criação de produto**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -491,7 +573,7 @@ Content-type: application/json
 
 ---
 
-### 1.2. **Listando produtos**
+### 2.2. **Listando produtos**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -536,7 +618,7 @@ Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
 
 ---
 
-### 1.3. **Listar produto por ID**
+### 2.3. **Listar produto por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -585,7 +667,7 @@ Vazio
 | -------------- | ----------------- |
 | 404 Not Found  | product not found |
 
-### 1.4. **Atualizar produto por ID**
+### 2.4. **Atualizar produto por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -631,7 +713,7 @@ Content-type: application/json
 }
 ```
 
-### 1.5. **Deletar produto por ID**
+### 2.5. **Deletar produto por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -701,7 +783,426 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ---
 
-## 3. **Storage**
+## 3. **Order**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto Order é definido como:
+
+| Campo      | Tipo                   | Descrição                                                                                                       |
+| ---------- | ---------------------- | --------------------------------------------------------------------------------------------------------------- |
+| id         | string                 | Identificador único do pedido                                                                                   |
+| storeId    | string                 | Identificador de filial da loja que fez o pedido.                                                               |
+| amount     | string                 | Soma do valor total dos produtos contidos no pedido.                                                            |
+| status     | string                 | Confere ao pedido o status de pending,intransit ou finished                                                     |
+| created_at | string                 | Data e hora que a order foi criada                                                                              |
+| updated_at | string                 | Data e hora que a order foi atualizada                                                                          |
+| products   | array                  | Array contendo os objetos produtos que foram adicionados a order                                                |
+|            | Objeto products        | O objeto product dentro de products array contém :                                                              |
+|            | id                     | Identificador único do produto da order :                                                                       |
+|            | price_product          | Preço do produto no momento da compra :                                                                         |
+|            | quantity_product_order | Quantidade do produto no pedido :                                                                               |
+|            | directed_from_id       | Identificador único do local de onde o produto saiu, podendo ser da própria loja ou do centro de distribuição : |
+|            | Objeto product         | O objeto product contém referencia para o product do banco de dados com os seguintes campos:                    |
+|            | id                     | Identificador único do produto no banco de dados:                                                               |
+|            | name                   | Nome do produto :                                                                                               |
+|            | description            | Descrição do produto se houver :                                                                                |
+|            | price                  | Preço do produto atualizado com o banco de dados :                                                              |
+|            | category               | Categoria do produto :                                                                                          |
+|            | img_URL                | Url da imagem do produto se houver :                                                                            |
+
+### Endpoints
+
+| Método | Rota                  | Descrição                                                              |
+| ------ | --------------------- | ---------------------------------------------------------------------- |
+| POST   | /order                | Criação de um pedido.                                                  |
+| GET    | /order                | Lista todos os pedidos.                                                |
+| GET    | /order/:id            | Lista um pedido, usando seu ID como parâmetro                          |
+| GET    | /order/status/:status | Lista todos os pedidos que possuirem o status fornecido como parâmetro |
+| PATCH  | /order/:id            | Atualiza status do pedido, usando seu ID como parâmetro                |
+| DELETE | /order/:id            | Deleta um pedido, usando seu ID como parâmetro                         |
+
+---
+
+### 3.1. **Criação de Order**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/order`
+
+### Exemplo de Request:
+
+```
+POST /order
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+{
+  "storeId": "f8037574-a607-47f7-806a-4754302851ac",
+  "productArray": [
+    {
+      "id": "6460053f-0126-414a-92b4-9af597d8705c",
+      "price_product": 25,
+      "quantity_product_order": 2,
+      "directed_from_id": "f8037574-a607-47f7-806a-4754302851ac"
+    },
+    {
+      "id": "6460053f-0126-414a-92b4-9af597d8705c",
+      "price_product": 25,
+      "quantity_product_order": 2,
+      "directed_from_id": "f8037574-a607-47f7-806a-4754302851ac"
+    }
+  ],
+  "status": "intransit"
+}
+```
+
+### Exemplo de Response:
+
+```
+201 Created
+```
+
+```json
+{
+  "storeId": "f8037574-a607-47f7-806a-4754302851ac",
+  "created_at": "2022-05-25T17:11:16.574Z",
+  "update_at": "2022-05-25T17:11:16.574Z",
+  "amount": 100,
+  "status": "intransit",
+  "id": "cb9f16b2-cf1c-4b4d-a650-adb8b024969a",
+  "store": {
+    "id": "f8037574-a607-47f7-806a-4754302851ac",
+    "branch": "filiac3",
+    "city": "cidade-sp",
+    "street": "rua: uma rua na cidade sp",
+    "district": "bairro: um bairro",
+    "number": "123",
+    "zipcode": "123456",
+    "phone": "123456",
+    "created_at": "2022-05-25T16:47:25.595Z",
+    "update_at": "2022-05-25T16:47:25.595Z"
+  }
+}
+```
+
+### Possíveis Erros:
+
+Nenhum
+
+---
+
+### 3.2. **Listando orders**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/order`
+
+### Exemplo de Request:
+
+```
+GET /order
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+	{
+		"id": "423b076a-0906-46a4-8f63-830c19fe53ea",
+		"storeId": "6b275a73-cf2d-4322-ab3b-317f5f454ac6",
+		"amount": 100,
+		"status": "intransit",
+		"created_at": "2022-05-25T16:26:14.691Z",
+		"update_at": "2022-05-25T16:26:14.691Z",
+		"products": [
+			{
+				"id": "d4be5086-548b-48d8-9509-7dd8c3e2b370",
+				"price_product": 25,
+				"quantity_product_order": 2,
+				"directed_from_id": "6b275a73-cf2d-4322-ab3b-317f5f454ac6",
+				"product": {
+					"id": "6460053f-0126-414a-92b4-9af597d8705c",
+					"name": "pão",
+					"description": "descrição do produto",
+					"price": 10,
+					"category": "panificadora",
+					"img_URL": "",
+					"created_at": "2022-05-25T18:11:42.048Z",
+					"update_at": "2022-05-25T18:11:42.048Z"
+				}
+			}
+]
+```
+
+### Possíveis Erros:
+
+Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
+
+---
+
+### 3.3. **Listar order por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/order/:id`
+
+### Exemplo de Request:
+
+```
+GET /order/423b076a-0906-46a4-8f63-830c19fe53ea
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                             |
+| --------- | ------ | ------------------------------------- |
+| id        | string | Identificador único do pedido (Order) |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+		"id": "423b076a-0906-46a4-8f63-830c19fe53ea",
+		"storeId": "6b275a73-cf2d-4322-ab3b-317f5f454ac6",
+		"amount": 100,
+		"status": "intransit",
+		"created_at": "2022-05-25T16:26:14.691Z",
+		"update_at": "2022-05-25T16:26:14.691Z",
+		"products": [
+			{
+				"id": "d4be5086-548b-48d8-9509-7dd8c3e2b370",
+				"price_product": 25,
+				"quantity_product_order": 2,
+				"directed_from_id": "2",
+				"product": {
+					"id": "6460053f-0126-414a-92b4-9af597d8705c",
+					"name": "pão",
+					"description": "descrição do produto",
+					"price": 10,
+					"category": "panificadora",
+					"img_URL": "",
+					"created_at": "2022-05-25T18:11:42.048Z",
+					"update_at": "2022-05-25T18:11:42.048Z"
+				}
+			}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição       |
+| -------------- | --------------- |
+| 404 Not Found  | Order not found |
+
+### 3.4. **Atualizar order por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/order/:id`
+
+### Exemplo de Request:
+
+```
+PATCH /order/423b076a-0906-46a4-8f63-830c19fe53ea
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                            |
+| --------- | ------ | ------------------------------------ |
+| id        | string | Identificador único da order (Order) |
+
+### Corpo da Requisição:
+
+```json
+{
+  "status": "finished"
+}
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "message": "Order status updated successfully",
+  "order": {
+    "id": "423b076a-0906-46a4-8f63-830c19fe53ea",
+    "storeId": "6b275a73-cf2d-4322-ab3b-317f5f454ac6",
+    "amount": 100,
+    "status": "finished",
+    "created_at": "2022-05-25T16:26:14.691Z",
+    "update_at": "2022-05-25T18:16:52.302Z",
+    "products": [
+      {
+        "id": "d4be5086-548b-48d8-9509-7dd8c3e2b370",
+        "price_product": 25,
+        "quantity_product_order": 2,
+        "directed_from_id": "2",
+        "product": {
+          "id": "6460053f-0126-414a-92b4-9af597d8705c",
+          "name": "pão",
+          "description": "descrição do produto",
+          "price": 10,
+          "category": "panificadora",
+          "img_URL": "",
+          "created_at": "2022-05-25T18:11:42.048Z",
+          "update_at": "2022-05-25T18:11:42.048Z"
+        }
+      }
+    ]
+  }
+}
+```
+
+### 3.5. **Deletar order por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/order/:id`
+
+### Exemplo de Request:
+
+```
+DELETE /order/423b076a-0906-46a4-8f63-830c19fe53ea
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                           |
+| --------- | ------ | ----------------------------------- |
+| id        | string | Identificador único da loja (Store) |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+Vazio
+```
+
+### 3.6. **Listar order por status**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/order/:status`
+
+### Exemplo de Request:
+
+```
+GET /order/intransit
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                                                          |
+| --------- | ------ | ------------------------------------------------------------------ |
+| status    | string | Status do pedido (Order) , pode ser: pending,intransit ou finished |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[{
+		"id": "423b076a-0906-46a4-8f63-830c19fe53ea",
+		"storeId": "6b275a73-cf2d-4322-ab3b-317f5f454ac6",
+		"amount": 100,
+		"status": "intransit",
+		"created_at": "2022-05-25T16:26:14.691Z",
+		"update_at": "2022-05-25T16:26:14.691Z",
+		"products": [
+			{
+				"id": "d4be5086-548b-48d8-9509-7dd8c3e2b370",
+				"price_product": 25,
+				"quantity_product_order": 2,
+				"directed_from_id": "2",
+				"product": {
+					"id": "6460053f-0126-414a-92b4-9af597d8705c",
+					"name": "pão",
+					"description": "descrição do produto",
+					"price": 10,
+					"category": "panificadora",
+					"img_URL": "",
+					"created_at": "2022-05-25T18:11:42.048Z",
+					"update_at": "2022-05-25T18:11:42.048Z"
+				}
+			}
+    ]
+```
+
+### Possíveis Erros:
+
+Nenhum, apenas uma lista vazia caso não encontre nenhuma order
+
+#
+
+#
+
+#
+
+---
+
+## 4. **Storage**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -726,7 +1227,7 @@ O objeto Storage é definido como:
 
 ---
 
-### 3.1. **Criação do estoque**
+### 4.1. **Criação do estoque**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -762,7 +1263,7 @@ Content-type: application/json
 }
 ```
 
-### 3.2. **Listando Estoque**
+### 4.2. **Listando Estoque**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -804,7 +1305,7 @@ Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
 
 ---
 
-### 3.3. **Listar estoque por ID**
+### 4.3. **Listar estoque por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -850,7 +1351,7 @@ Vazio
 | -------------- | ----------------- |
 | 404 Not Found  | storage not found |
 
-### 3.4. **Atualizar estoque por ID**
+### 4.4. **Atualizar estoque por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -891,7 +1392,7 @@ Content-type: application/json
 }
 ```
 
-### 3.5. **Deletar estoque por ID**
+### 4.5. **Deletar estoque por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 

@@ -5,8 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { ProductOrder } from "./productOrder.entity";
+import { Store } from "./store.entity";
 
 @Entity("order")
 export class Order {
@@ -18,6 +21,7 @@ export class Order {
 
   @OneToMany(() => ProductOrder, (productOrder) => productOrder.order, {
     eager: true,
+    onDelete: "CASCADE",
   })
   products: ProductOrder[];
 
@@ -32,4 +36,7 @@ export class Order {
 
   @UpdateDateColumn()
   update_at: Date;
+
+  @ManyToOne(() => Store, (store) => store.orders)
+  store: Store;
 }

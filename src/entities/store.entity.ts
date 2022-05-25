@@ -1,5 +1,13 @@
-import { Entity, PrimaryColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Order } from "./order.entity";
 
 @Entity("store")
 export class Store {
@@ -48,6 +56,15 @@ export class Store {
     nullable: false,
   })
   phone: string;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  update_at: Date;
+
+  @OneToMany(() => Order, (order) => order.store)
+  orders: Order[];
 
   constructor() {
     if (!this.id) {
