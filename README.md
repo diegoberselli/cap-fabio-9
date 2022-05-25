@@ -349,6 +349,29 @@ Content-type: application/json
 }
 ```
 
+### Schema de Validação com Yup:
+
+```javascript
+ schema: {
+    body: {
+      yupSchema: yup.object().shape({
+        branch: yup.string().required("branch name is required"),
+        city: yup.string().required("city name is required"),
+        street: yup.string().required("street name is required"),
+        district: yup.string().required("district name is required"),
+        number: yup.number().required("number is required"),
+        zipCode: yup.number().required("zipCode number is required"),
+        phone: yup.number().required("phone number is required"),
+      }),
+      validateOptions: {
+        abortEarly: false,
+      },
+    },
+  },
+```
+
+OBS.: Chaves não presentes no schema serão removidas.
+
 ### Exemplo de Response:
 
 ```
@@ -398,7 +421,7 @@ Vazio
 ### Exemplo de Response:
 
 ```
-200 OK
+204 OK
 ```
 
 ```json
@@ -658,40 +681,12 @@ Content-type: application/json
 Vazio
 ```
 
-### Schema de Validação com Yup:
-
-```javascript
- schema: {
-    body: {
-      yupSchema: yup.object().shape({
-        branch: yup.string().required("branch name is required"),
-        city: yup.string().required("city name is required"),
-        street: yup.string().required("street name is required"),
-        district: yup.string().required("district name is required"),
-        number: yup.number().required("number is required"),
-        zipCode: yup.number().required("zipCode number is required"),
-        phone: yup.number().required("phone number is required"),
-      }),
-      validateOptions: {
-        abortEarly: false,
-      },
-    },
-  },
-```
-
-OBS.: Chaves não presentes no schema serão removidas.
-
 ### Exemplo de Response:
 
 ```
-200 OK
+204 OK
 ```
 
-```json
-{
-  "message": "product deleted with sucess!"
-}
-```
 
 #
 
@@ -701,7 +696,7 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ---
 
-## 3. **Storage**
+## 4. **Storage**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -726,7 +721,7 @@ O objeto Storage é definido como:
 
 ---
 
-### 3.1. **Criação do estoque**
+### 4.1. **Criação do estoque**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -762,7 +757,7 @@ Content-type: application/json
 }
 ```
 
-### 3.2. **Listando Estoque**
+### 4.2. **Listando Estoque**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -804,7 +799,7 @@ Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
 
 ---
 
-### 3.3. **Listar estoque por ID**
+### 4.3. **Listar estoque por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -850,7 +845,7 @@ Vazio
 | -------------- | ----------------- |
 | 404 Not Found  | storage not found |
 
-### 3.4. **Atualizar estoque por ID**
+### 4.4. **Atualizar estoque por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -891,7 +886,7 @@ Content-type: application/json
 }
 ```
 
-### 3.5. **Deletar estoque por ID**
+### 4.5. **Deletar estoque por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -921,13 +916,7 @@ Vazio
 ### Exemplo de Response:
 
 ```
-200 OK
-```
-
-```json
-{
-  "message": "Storage deleted with sucess!"
-}
+204 OK
 ```
 
 #
