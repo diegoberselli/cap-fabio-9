@@ -441,7 +441,7 @@ O objeto Product é definido como:
 
 ---
 
-### 1.1. **Criação de produto**
+### 2.1. **Criação de produto**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -491,7 +491,7 @@ Content-type: application/json
 
 ---
 
-### 1.2. **Listando produtos**
+### 2.2. **Listando produtos**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -536,7 +536,7 @@ Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
 
 ---
 
-### 1.3. **Listar produto por ID**
+### 2.3. **Listar produto por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -585,7 +585,7 @@ Vazio
 | -------------- | ----------------- |
 | 404 Not Found  | product not found |
 
-### 1.4. **Atualizar produto por ID**
+### 2.4. **Atualizar produto por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -631,7 +631,7 @@ Content-type: application/json
 }
 ```
 
-### 1.5. **Deletar produto por ID**
+### 2.5. **Deletar produto por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -701,7 +701,305 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ---
 
-## 3. **Storage**
+## 3. **Order**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto Order é definido como:
+
+| Campo      | Tipo                   | Descrição                                                                                                       |
+| ---------- | ---------------------- | --------------------------------------------------------------------------------------------------------------- |
+| id         | string                 | Identificador único do pedido                                                                                   |
+| storeId    | string                 | Identificador de filial da loja que fez o pedido.                                                               |
+| amount     | string                 | Soma do valor total dos produtos contidos no pedido.                                                            |
+| status     | string                 | Confere ao pedido o status de pending,intransit ou finished                                                     |
+| created_at | string                 | Data e hora que a order foi criada                                                                              |
+| updated_at | string                 | Data e hora que a order foi atualizada                                                                          |
+| products   | array                  | Array contendo os objetos produtos que foram adicionados a order                                                |
+|            | Objeto products        | O objeto product dentro de products array contém :                                                              |
+|            | id                     | Identificador único do produto da order :                                                                       |
+|            | price_product          | Preço do produto no momento da compra :                                                                         |
+|            | quantity_product_order | Quantidade do produto no pedido :                                                                               |
+|            | directed_from_id       | Identificador único do local de onde o produto saiu, podendo ser da própria loja ou do centro de distribuição : |
+|            | Objeto product         | O objeto product contém referencia para o product do banco de dados com os seguintes campos:                    |
+|            | id                     | Identificador único do produto no banco de dados:                                                               |
+|            | name                   | Nome do produto :                                                                                               |
+|            | description            | Descrição do produto se houver :                                                                                |
+|            | price                  | Preço do produto atualizado com o banco de dados :                                                              |
+|            | category               | Categoria do produto :                                                                                          |
+|            | img_URL                | Url da imagem do produto se houver :                                                                            |
+
+### Endpoints
+
+| Método | Rota                  | Descrição                                                              |
+| ------ | --------------------- | ---------------------------------------------------------------------- |
+| POST   | /order                | Criação de um pedido.                                                  |
+| GET    | /order                | Lista todos os pedidos.                                                |
+| GET    | /order/:id            | Lista um pedido, usando seu ID como parâmetro                          |
+| GET    | /order/status/:status | Lista todos os pedidos que possuirem o status fornecido como parâmetro |
+| PATCH  | /order/:id            | Atualiza status do pedido, usando seu ID como parâmetro                |
+| DELETE | /order/:id            | Deleta um pedido, usando seu ID como parâmetro                         |
+
+---
+
+### 1.1. **Criação de Loja**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/store`
+
+### Exemplo de Request:
+
+```
+POST /store
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+{
+  "branch": "filial1",
+  "city": "cidade-sp",
+  "street": "uma rua na cidade sp",
+  "district": "um bairro",
+  "number": "987",
+  "zipcode": "22506-300",
+  "phone": "12345678"
+}
+```
+
+### Exemplo de Response:
+
+```
+201 Created
+```
+
+```json
+{
+  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+  "branch": "filial1",
+  "city": "cidade-sp",
+  "street": "uma rua na cidade sp",
+  "district": "um bairro",
+  "number": "987",
+  "zipcode": "22506-300",
+  "phone": "12345678"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                                            |
+| -------------- | ---------------------------------------------------- |
+| 409 Conflict   | This branch of store already exists in your database |
+
+---
+
+### 1.2. **Listando lojas**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/store`
+
+### Exemplo de Request:
+
+```
+GET /store
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+  {
+    "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+    "branch": "filial1",
+    "city": "cidade-sp",
+    "street": "uma rua na cidade sp",
+    "district": "um bairro",
+    "number": "987",
+    "zipcode": "22506-300",
+    "phone": "12345678"
+  }
+]
+```
+
+### Possíveis Erros:
+
+Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
+
+---
+
+### 1.3. **Listar loja por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/store/:id`
+
+### Exemplo de Request:
+
+```
+GET /store/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                           |
+| --------- | ------ | ----------------------------------- |
+| id        | string | Identificador único da loja (Store) |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+  "branch": "filial2",
+  "city": "cidade-sp",
+  "street": "rua: uma rua na cidade sp",
+  "district": "bairro: um bairro",
+  "number": "123",
+  "zipcode": "123456",
+  "phone": "123456"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição       |
+| -------------- | --------------- |
+| 404 Not Found  | Store not found |
+
+### 1.4. **Atualizar loja por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/store/:id`
+
+### Exemplo de Request:
+
+```
+PATCH /store/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                           |
+| --------- | ------ | ----------------------------------- |
+| id        | string | Identificador único da loja (Store) |
+
+### Corpo da Requisição:
+
+```json
+{
+  "branch": "filial1",
+  "city": "cidade-sp",
+  "street": "uma rua na cidade sp atualizada",
+  "district": "um bairro atualizado",
+  "number": "001",
+  "zipcode": "22506-200",
+  "phone": "12345678"
+}
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+  "branch": "filial1",
+  "city": "cidade-sp",
+  "street": "uma rua na cidade sp atualizada",
+  "district": "um bairro atualizado",
+  "number": "001",
+  "zipcode": "22506-200",
+  "phone": "12345678"
+}
+```
+
+### 1.5. **Deletar loja por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/store/:id`
+
+### Exemplo de Request:
+
+```
+DELETE /store/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                           |
+| --------- | ------ | ----------------------------------- |
+| id        | string | Identificador único da loja (Store) |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "message": "Store deleted with sucess!"
+}
+```
+
+#
+
+#
+
+#
+
+---
+
+## 4. **Storage**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -726,7 +1024,7 @@ O objeto Storage é definido como:
 
 ---
 
-### 3.1. **Criação do estoque**
+### 4.1. **Criação do estoque**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -762,7 +1060,7 @@ Content-type: application/json
 }
 ```
 
-### 3.2. **Listando Estoque**
+### 4.2. **Listando Estoque**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -804,7 +1102,7 @@ Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
 
 ---
 
-### 3.3. **Listar estoque por ID**
+### 4.3. **Listar estoque por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -850,7 +1148,7 @@ Vazio
 | -------------- | ----------------- |
 | 404 Not Found  | storage not found |
 
-### 3.4. **Atualizar estoque por ID**
+### 4.4. **Atualizar estoque por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -891,7 +1189,7 @@ Content-type: application/json
 }
 ```
 
-### 3.5. **Deletar estoque por ID**
+### 4.5. **Deletar estoque por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 

@@ -27,6 +27,7 @@ export default class UpdateStoreService {
     number ? (store.number = number) : store.number;
     zipcode ? (store.zipcode = zipcode) : store.zipcode;
     phone ? (store.phone = phone) : store.phone;
+    store.update_at = new Date();
 
     return storeRepository.save(store);
   };

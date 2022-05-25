@@ -8,10 +8,14 @@ export class ProductOrder {
   @PrimaryColumn("uuid")
   readonly id: string;
 
-  @ManyToOne(() => Order)
+  @ManyToOne(() => Order, { onDelete: "CASCADE", onUpdate: "CASCADE" })
   order: Order;
 
-  @ManyToOne(() => Product, { eager: true })
+  @ManyToOne(() => Product, {
+    eager: true,
+    onDelete: "SET NULL",
+    onUpdate: "CASCADE",
+  })
   product: Product;
 
   @Column("float")
