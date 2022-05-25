@@ -15,7 +15,7 @@ export const orderRouter = () => {
   router.get("", OrderController.showAll);
   router.get("", OrderController.show);
   router.get("/status/:status", OrderController.showStatus);
-  router.get("/:id", OrderController.update);
+  router.patch("/:id", OrderController.update);
   router.delete("/:id", OrderController.delete);
   return router;
 };

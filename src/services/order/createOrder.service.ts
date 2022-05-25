@@ -12,7 +12,6 @@ export default class CreateOrderService {
     const orderRepository = AppDataSource.getRepository(Order);
     const productsRepository = AppDataSource.getRepository(Product);
     const productOrderRepository = AppDataSource.getRepository(ProductOrder);
-    const storeRepository = AppDataSource.getRepository(Store);
 
     const productIds: Array<string> = [];
     productArray.forEach((product) => {
@@ -62,15 +61,15 @@ export default class CreateOrderService {
 
     // let result = await this.repository.persist(product);
     // // -----------------
-    const store = await storeRepository.findOne({
-      where: { id: order.storeId },
-    });
+    // const store = await storeRepository.findOne({
+    //   where: { id: order.storeId },
+    // });
 
-    if (store) {
-      //store.orders = [order];
-      order.store = store;
-      await orderRepository.save(order);
-    }
+    // if (store) {
+    //   //store.orders = [order];
+    //   order.store = store;
+    //   await orderRepository.save(order);
+    // }
 
     return order;
   }

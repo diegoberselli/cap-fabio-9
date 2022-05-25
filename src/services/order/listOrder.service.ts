@@ -9,7 +9,7 @@ export default class ListOrderService {
     const order = orderRepository.findOne({ where: { id: id } });
 
     if (!order) {
-      throw new AppError(404, "Order Product not found");
+      throw new AppError(404, "Order not found");
     }
 
     return order;

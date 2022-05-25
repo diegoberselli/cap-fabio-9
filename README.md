@@ -742,16 +742,16 @@ O objeto Order é definido como:
 
 ---
 
-### 1.1. **Criação de Loja**
+### 3.1. **Criação de Order**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
-### `/store`
+### `/order`
 
 ### Exemplo de Request:
 
 ```
-POST /store
+POST /order
 Host: https://cap-fabio-9.herokuapp.com/
 Authorization: None
 Content-type: application/json
@@ -761,13 +761,22 @@ Content-type: application/json
 
 ```json
 {
-  "branch": "filial1",
-  "city": "cidade-sp",
-  "street": "uma rua na cidade sp",
-  "district": "um bairro",
-  "number": "987",
-  "zipcode": "22506-300",
-  "phone": "12345678"
+  "storeId": "f8037574-a607-47f7-806a-4754302851ac",
+  "productArray": [
+    {
+      "id": "6460053f-0126-414a-92b4-9af597d8705c",
+      "price_product": 25,
+      "quantity_product_order": 2,
+      "directed_from_id": "f8037574-a607-47f7-806a-4754302851ac"
+    },
+    {
+      "id": "6460053f-0126-414a-92b4-9af597d8705c",
+      "price_product": 25,
+      "quantity_product_order": 2,
+      "directed_from_id": "f8037574-a607-47f7-806a-4754302851ac"
+    }
+  ],
+  "status": "intransit"
 }
 ```
 
@@ -779,35 +788,43 @@ Content-type: application/json
 
 ```json
 {
-  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-  "branch": "filial1",
-  "city": "cidade-sp",
-  "street": "uma rua na cidade sp",
-  "district": "um bairro",
-  "number": "987",
-  "zipcode": "22506-300",
-  "phone": "12345678"
+  "storeId": "f8037574-a607-47f7-806a-4754302851ac",
+  "created_at": "2022-05-25T17:11:16.574Z",
+  "update_at": "2022-05-25T17:11:16.574Z",
+  "amount": 100,
+  "status": "intransit",
+  "id": "cb9f16b2-cf1c-4b4d-a650-adb8b024969a",
+  "store": {
+    "id": "f8037574-a607-47f7-806a-4754302851ac",
+    "branch": "filiac3",
+    "city": "cidade-sp",
+    "street": "rua: uma rua na cidade sp",
+    "district": "bairro: um bairro",
+    "number": "123",
+    "zipcode": "123456",
+    "phone": "123456",
+    "created_at": "2022-05-25T16:47:25.595Z",
+    "update_at": "2022-05-25T16:47:25.595Z"
+  }
 }
 ```
 
 ### Possíveis Erros:
 
-| Código do Erro | Descrição                                            |
-| -------------- | ---------------------------------------------------- |
-| 409 Conflict   | This branch of store already exists in your database |
+Nenhum
 
 ---
 
-### 1.2. **Listando lojas**
+### 3.2. **Listando orders**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
-### `/store`
+### `/order`
 
 ### Exemplo de Request:
 
 ```
-GET /store
+GET /order
 Host: https://cap-fabio-9.herokuapp.com/
 Authorization: None
 Content-type: application/json
@@ -827,16 +844,30 @@ Vazio
 
 ```json
 [
-  {
-    "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-    "branch": "filial1",
-    "city": "cidade-sp",
-    "street": "uma rua na cidade sp",
-    "district": "um bairro",
-    "number": "987",
-    "zipcode": "22506-300",
-    "phone": "12345678"
-  }
+	{
+		"id": "423b076a-0906-46a4-8f63-830c19fe53ea",
+		"storeId": "6b275a73-cf2d-4322-ab3b-317f5f454ac6",
+		"amount": 100,
+		"status": "intransit",
+		"created_at": "2022-05-25T16:26:14.691Z",
+		"update_at": "2022-05-25T16:26:14.691Z",
+		"products": [
+			{
+				"id": "d4be5086-548b-48d8-9509-7dd8c3e2b370",
+				"price_product": 25,
+				"quantity_product_order": 2,
+				"directed_from_id": "6b275a73-cf2d-4322-ab3b-317f5f454ac6",
+				"product": {
+					"id": "6460053f-0126-414a-92b4-9af597d8705c",
+					"name": "pão",
+					"description": "descrição do produto",
+					"price": 10,
+					"category": "panificadora",
+					"img_URL": "",
+					"created_at": "2022-05-25T18:11:42.048Z",
+					"update_at": "2022-05-25T18:11:42.048Z"
+				}
+			}
 ]
 ```
 
@@ -846,16 +877,16 @@ Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
 
 ---
 
-### 1.3. **Listar loja por ID**
+### 3.3. **Listar order por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
-### `/store/:id`
+### `/order/:id`
 
 ### Exemplo de Request:
 
 ```
-GET /store/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+GET /order/423b076a-0906-46a4-8f63-830c19fe53ea
 Host: https://cap-fabio-9.herokuapp.com/
 Authorization: None
 Content-type: application/json
@@ -863,9 +894,9 @@ Content-type: application/json
 
 ### Parâmetros da Requisição:
 
-| Parâmetro | Tipo   | Descrição                           |
-| --------- | ------ | ----------------------------------- |
-| id        | string | Identificador único da loja (Store) |
+| Parâmetro | Tipo   | Descrição                             |
+| --------- | ------ | ------------------------------------- |
+| id        | string | Identificador único do pedido (Order) |
 
 ### Corpo da Requisição:
 
@@ -881,33 +912,47 @@ Vazio
 
 ```json
 {
-  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-  "branch": "filial2",
-  "city": "cidade-sp",
-  "street": "rua: uma rua na cidade sp",
-  "district": "bairro: um bairro",
-  "number": "123",
-  "zipcode": "123456",
-  "phone": "123456"
-}
+		"id": "423b076a-0906-46a4-8f63-830c19fe53ea",
+		"storeId": "6b275a73-cf2d-4322-ab3b-317f5f454ac6",
+		"amount": 100,
+		"status": "intransit",
+		"created_at": "2022-05-25T16:26:14.691Z",
+		"update_at": "2022-05-25T16:26:14.691Z",
+		"products": [
+			{
+				"id": "d4be5086-548b-48d8-9509-7dd8c3e2b370",
+				"price_product": 25,
+				"quantity_product_order": 2,
+				"directed_from_id": "2",
+				"product": {
+					"id": "6460053f-0126-414a-92b4-9af597d8705c",
+					"name": "pão",
+					"description": "descrição do produto",
+					"price": 10,
+					"category": "panificadora",
+					"img_URL": "",
+					"created_at": "2022-05-25T18:11:42.048Z",
+					"update_at": "2022-05-25T18:11:42.048Z"
+				}
+			}
 ```
 
 ### Possíveis Erros:
 
 | Código do Erro | Descrição       |
 | -------------- | --------------- |
-| 404 Not Found  | Store not found |
+| 404 Not Found  | Order not found |
 
-### 1.4. **Atualizar loja por ID**
+### 3.4. **Atualizar order por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
-### `/store/:id`
+### `/order/:id`
 
 ### Exemplo de Request:
 
 ```
-PATCH /store/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+PATCH /order/423b076a-0906-46a4-8f63-830c19fe53ea
 Host: https://cap-fabio-9.herokuapp.com/
 Authorization: None
 Content-type: application/json
@@ -915,21 +960,15 @@ Content-type: application/json
 
 ### Parâmetros da Requisição:
 
-| Parâmetro | Tipo   | Descrição                           |
-| --------- | ------ | ----------------------------------- |
-| id        | string | Identificador único da loja (Store) |
+| Parâmetro | Tipo   | Descrição                            |
+| --------- | ------ | ------------------------------------ |
+| id        | string | Identificador único da order (Order) |
 
 ### Corpo da Requisição:
 
 ```json
 {
-  "branch": "filial1",
-  "city": "cidade-sp",
-  "street": "uma rua na cidade sp atualizada",
-  "district": "um bairro atualizado",
-  "number": "001",
-  "zipcode": "22506-200",
-  "phone": "12345678"
+  "status": "finished"
 }
 ```
 
@@ -941,27 +980,46 @@ Content-type: application/json
 
 ```json
 {
-  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
-  "branch": "filial1",
-  "city": "cidade-sp",
-  "street": "uma rua na cidade sp atualizada",
-  "district": "um bairro atualizado",
-  "number": "001",
-  "zipcode": "22506-200",
-  "phone": "12345678"
+  "message": "Order status updated successfully",
+  "order": {
+    "id": "423b076a-0906-46a4-8f63-830c19fe53ea",
+    "storeId": "6b275a73-cf2d-4322-ab3b-317f5f454ac6",
+    "amount": 100,
+    "status": "finished",
+    "created_at": "2022-05-25T16:26:14.691Z",
+    "update_at": "2022-05-25T18:16:52.302Z",
+    "products": [
+      {
+        "id": "d4be5086-548b-48d8-9509-7dd8c3e2b370",
+        "price_product": 25,
+        "quantity_product_order": 2,
+        "directed_from_id": "2",
+        "product": {
+          "id": "6460053f-0126-414a-92b4-9af597d8705c",
+          "name": "pão",
+          "description": "descrição do produto",
+          "price": 10,
+          "category": "panificadora",
+          "img_URL": "",
+          "created_at": "2022-05-25T18:11:42.048Z",
+          "update_at": "2022-05-25T18:11:42.048Z"
+        }
+      }
+    ]
+  }
 }
 ```
 
-### 1.5. **Deletar loja por ID**
+### 3.5. **Deletar order por ID**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
-### `/store/:id`
+### `/order/:id`
 
 ### Exemplo de Request:
 
 ```
-DELETE /store/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+DELETE /order/423b076a-0906-46a4-8f63-830c19fe53ea
 Host: https://cap-fabio-9.herokuapp.com/
 Authorization: None
 Content-type: application/json
@@ -986,10 +1044,73 @@ Vazio
 ```
 
 ```json
-{
-  "message": "Store deleted with sucess!"
-}
+Vazio
 ```
+
+### 3.6. **Listar order por status**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/order/:status`
+
+### Exemplo de Request:
+
+```
+GET /order/intransit
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                                                          |
+| --------- | ------ | ------------------------------------------------------------------ |
+| status    | string | Status do pedido (Order) , pode ser: pending,intransit ou finished |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[{
+		"id": "423b076a-0906-46a4-8f63-830c19fe53ea",
+		"storeId": "6b275a73-cf2d-4322-ab3b-317f5f454ac6",
+		"amount": 100,
+		"status": "intransit",
+		"created_at": "2022-05-25T16:26:14.691Z",
+		"update_at": "2022-05-25T16:26:14.691Z",
+		"products": [
+			{
+				"id": "d4be5086-548b-48d8-9509-7dd8c3e2b370",
+				"price_product": 25,
+				"quantity_product_order": 2,
+				"directed_from_id": "2",
+				"product": {
+					"id": "6460053f-0126-414a-92b4-9af597d8705c",
+					"name": "pão",
+					"description": "descrição do produto",
+					"price": 10,
+					"category": "panificadora",
+					"img_URL": "",
+					"created_at": "2022-05-25T18:11:42.048Z",
+					"update_at": "2022-05-25T18:11:42.048Z"
+				}
+			}
+    ]
+```
+
+### Possíveis Erros:
+
+Nenhum, apenas uma lista vazia caso não encontre nenhuma order
 
 #
 
