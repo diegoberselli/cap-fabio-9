@@ -1,13 +1,14 @@
 import { Order } from "../../entities/order.entity";
 import { AppError } from "../../errors/AppError";
 import { AppDataSource } from "../../data-source";
+import { IOrderObjectUpdate } from "../../interfaces/order";
 
 export default class UpdateOrderService {
-  static async execute(id_order_product: string, amount: number) {
+  static async execute({ id, status }: IOrderObjectUpdate) {
     const orderRepository = AppDataSource.getRepository(Order);
     const order = await orderRepository.findOne({
       where: {
-        id: id_order_product,
+        id: id,
       },
     });
 
@@ -15,7 +16,7 @@ export default class UpdateOrderService {
       throw new AppError(404, "Order not found");
     }
 
-    order.amount = amount || order.amount;
+    order.status = status || order.status;
     order.update_at = new Date();
 
     orderRepository.save(order);

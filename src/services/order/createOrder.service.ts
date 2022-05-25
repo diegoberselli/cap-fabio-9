@@ -5,13 +5,13 @@ import { ProductOrder } from "../../entities/productOrder.entity";
 import { IOrderCreate } from "../../interfaces/order";
 import { Product } from "../../entities/product.entity";
 import { In } from "typeorm";
+import { Store } from "../../entities/store.entity";
 
 export default class CreateOrderService {
-  static async execute({ storeId, productArray }: IOrderCreate) {
+  static async execute({ storeId, productArray, status }: IOrderCreate) {
     const orderRepository = AppDataSource.getRepository(Order);
     const productsRepository = AppDataSource.getRepository(Product);
     const productOrderRepository = AppDataSource.getRepository(ProductOrder);
-    console.log(productArray, "productArray");
 
     const productIds: Array<string> = [];
     productArray.forEach((product) => {
@@ -24,13 +24,6 @@ export default class CreateOrderService {
       throw new AppError(404, "Invalid list of ids");
     }
 
-    //conferir se existe algum produto que seja cd, se pelo menos um existir,
-    //o pedido vai receber order.status = "pending"
-    //caso contrário pode receber o order.status="finished"
-
-    //rota patch para atualizar que recebe o id do local que esta atualizando se for
-    //o cd atualiza para in transit caso não seja o cd atualiza para finished
-
     const amount = productArray.reduce(
       (acc, item) => acc + item.price_product * item.quantity_product_order,
       0
@@ -41,7 +34,7 @@ export default class CreateOrderService {
     order.created_at = new Date();
     order.update_at = new Date();
     order.amount = amount;
-    order.status = "pending";
+    order.status = status;
 
     orderRepository.create(order);
     await orderRepository.save(order);
@@ -55,9 +48,28 @@ export default class CreateOrderService {
           quantity_product_order: product.quantity_product_order,
           directed_from_id: product.directed_from_id,
         });
+
         await productOrderRepository.save(orderProduct);
       }
     });
+
+    // let categoryRepository = await this.connection.getRepository<Category>(Category);
+    // let category = await categoryRepository.findOneById(req.body.category);
+    // let product = new Product();
+    // product.category = category;
+    // product.storageUrl = req.body.storageUrl;
+
+    // let result = await this.repository.persist(product);
+    // // -----------------
+    // const store = await storeRepository.findOne({
+    //   where: { id: order.storeId },
+    // });
+
+    // if (store) {
+    //   //store.orders = [order];
+    //   order.store = store;
+    //   await orderRepository.save(order);
+    // }
 
     return order;
   }
