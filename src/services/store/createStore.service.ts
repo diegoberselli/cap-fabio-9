@@ -32,6 +32,8 @@ export default class CreateStoreService {
     store.number = number;
     store.zipcode = zipcode;
     store.phone = phone;
+    store.created_at = new Date();
+    store.update_at = new Date();
 
     storeRepository.create(store);
     await storeRepository.save(store);

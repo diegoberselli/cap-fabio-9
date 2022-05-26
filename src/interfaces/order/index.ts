@@ -1,5 +1,6 @@
 export interface IOrderCreate {
   storeId: string;
+  status: string;
   productArray: IOrder[];
 }
 
@@ -13,4 +14,13 @@ export interface IOrder {
 
 export interface IOrderObjectId {
   id: string;
+}
+
+export interface IOrderObjectStatus {
+  status: string;
+}
+
+export interface IOrderObjectUpdate {
+  id: string;
+  status: string;
 }

@@ -13,6 +13,7 @@ export const storeRouter = () => {
   );
   router.get("", StoreController.list);
   router.get("/:id", StoreController.index);
+  router.get("/orders/:id", StoreController.indexOrders);
   router.patch("/:id", StoreController.update);
   router.delete("/:id", StoreController.delete);
 

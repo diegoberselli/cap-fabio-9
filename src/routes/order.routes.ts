@@ -13,7 +13,8 @@ export const orderRouter = () => {
   );
   router.get("", OrderController.showAll);
   router.get("", OrderController.show);
-  router.get("/update", OrderController.update);
-  router.delete("/delete", OrderController.delete);
+  router.get("/status/:status", OrderController.showStatus);
+  router.patch("/:id", OrderController.update);
+  router.delete("/:id", OrderController.delete);
   return router;
 };
