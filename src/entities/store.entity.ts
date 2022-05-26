@@ -2,11 +2,14 @@ import {
   Entity,
   PrimaryColumn,
   Column,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Storage } from "./storageStoreProducts";
 import { Order } from "./order.entity";
 
 @Entity("store")
@@ -57,11 +60,20 @@ export class Store {
   })
   phone: string;
 
+  @Column()
+  password: string;
+
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   update_at: Date;
+
+  @OneToOne(() => Storage, {
+    eager: true,
+  })
+  @JoinColumn()
+  storage: Storage;
 
   @OneToMany(() => Order, (order) => order.store)
   orders: Order[];

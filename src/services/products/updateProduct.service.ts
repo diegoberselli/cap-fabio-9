@@ -14,7 +14,8 @@ export default class UpdateProductService {
   }: IProduct) => {
     const productRepository = AppDataSource.getRepository(Product);
 
-    const product = await productRepository.findOne({ where: { id: id } });
+    const products = await productRepository.find();
+    const product = products.find((item) => item.id === id);
 
     if (!product) {
       throw new AppError(404, "Not found any product with this id");

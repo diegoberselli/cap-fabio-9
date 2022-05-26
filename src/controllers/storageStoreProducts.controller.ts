@@ -4,6 +4,7 @@ import deleteStorageStoreProductService from "../services/storageStoreProducts/d
 import IndexStorageStoreProductService from "../services/storageStoreProducts/indexStorageStoreProducts.service";
 import ListStorageStoreProductService from "../services/storageStoreProducts/listStorageStoreProducts.service";
 import UpdateStorageStoreProductService from "../services/storageStoreProducts/updateStorageStoreProducts.service";
+import AddProductsStorageStoreService from "../services/storageStoreProducts/addProductsStorageStore.service";
 
 export default class StorageStoreProductController {
   static store = async (request: Request, response: Response) => {
@@ -42,4 +43,23 @@ export default class StorageStoreProductController {
 
     return response.status(204).json();
   };
+
+  static async addProducts(req: Request, res: Response) {
+    const { products } = req.body;
+    const { branchLoggedIn } = req;
+
+    const addedProducts = await AddProductsStorageStoreService.execute(
+      {
+        products,
+      },
+      branchLoggedIn
+    );
+
+    res
+      .status(200)
+      .json({
+        message: "Successfully stored products",
+        addedProducts: addedProducts,
+      });
+  }
 }
