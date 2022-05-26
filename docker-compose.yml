@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  cap_fabio_9: 
+    container_name: db_capstone 
+    image: cap_fabio_9
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - DB_USERNAME=diegoberselli
+      - DB_HOST=db
+      - DB=cap_fabio_9
+      - DB_PASSWORD=Berselli123
+      - DB_PORT=5432
+      - DATABASE_URL=postgres://diegoberselli:Berselli123@db:5432/cap_fabio_9
+    depends_on:
+      - db
+  db:
+    container_name: db_cap_fabio_9
+    image: postgres:12
+    ports: 
+      - 45432:5432
+    environment:
+      - POSTGRES_USER=diegoberselli
+      - POSTGRES_PASSWORD=Berselli123
+      - POSTGRES_DB=cap_fabio_9
+ 

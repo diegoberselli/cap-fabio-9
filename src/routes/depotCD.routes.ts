@@ -5,7 +5,6 @@ const router = Router();
 
 export const depotCDRouter = () => {
 
-    
     router.post('/', DepotCDController.store);
     router.get('/', DepotCDController.list);
     router.get('/:id', DepotCDController.index);
