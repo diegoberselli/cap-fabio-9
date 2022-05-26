@@ -4,11 +4,12 @@ import IndexStoreService from "../services/store/indexStore.service";
 import UpdateStoreService from "../services/store/updateStore.service";
 import listStoreService from "../services/store/listStore.service";
 import deleteStoreService from "../services/store/deleteStore.service";
+import { LoginStoreService } from "../services/store/loginStore.service";
 import IndexOrdersStoreService from "../services/store/indexOrdersStore.service";
 
 export default class StoreController {
   static store = async (request: Request, response: Response) => {
-    const { branch, city, street, district, number, zipcode, phone } =
+    const { branch, city, street, district, number, zipcode, phone, password } =
       request.body;
     const store = await CreateStoreService.execute({
       branch,
@@ -18,6 +19,7 @@ export default class StoreController {
       number,
       zipcode,
       phone,
+      password,
     });
     return response.status(201).json(store);
   };
@@ -35,6 +37,7 @@ export default class StoreController {
 
   static index = async (request: Request, response: Response) => {
     const { id } = request.params;
+
     const store = await IndexStoreService.execute({ id });
     return response.status(200).json(store);
   };
@@ -59,8 +62,16 @@ export default class StoreController {
   static delete = async (request: Request, response: Response) => {
     const { id } = request.params;
 
-    const deletedStore = await deleteStoreService.execute({ id });
+    await deleteStoreService.execute({ id });
 
     return response.status(204).json();
+  };
+
+  static login = async (request: Request, response: Response) => {
+    const { branch, password } = request.body;
+
+    const token = await LoginStoreService.execute(branch, password);
+
+    return response.status(200).json({ token: token });
   };
 }

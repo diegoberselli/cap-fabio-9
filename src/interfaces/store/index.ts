@@ -17,6 +17,7 @@ export interface IStoreCreate {
   number: string;
   zipcode: string;
   phone: string;
+  password: string;
 }
 
 export interface IStoreId {

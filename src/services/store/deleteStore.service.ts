@@ -1,15 +1,21 @@
 import { AppDataSource } from "../../data-source";
 import { IStoreId } from "../../interfaces/store";
 import { Store } from "../../entities/store.entity";
+import { AppError } from "../../errors/AppError";
 
 export default class deleteStoreService {
   static execute = async ({ id }: IStoreId) => {
     const storeRepository = AppDataSource.getRepository(Store);
 
-    const store = await storeRepository.findOne({ where: { id } });
+    const allStores = await storeRepository.find();
+    const store = allStores.find((item) => item.id === id);
 
-    const deletedUser = await storeRepository.delete(store!.id);
+    if (!store) {
+      throw new AppError(404, "Store not found");
+    }
 
-    return deletedUser;
+    await storeRepository.delete(store.id);
+
+    return;
   };
 }

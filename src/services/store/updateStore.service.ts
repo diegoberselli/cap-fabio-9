@@ -15,7 +15,9 @@ export default class UpdateStoreService {
     phone,
   }: IStore) => {
     const storeRepository = AppDataSource.getRepository(Store);
-    const store = await storeRepository.findOne({ where: { id: id } });
+    const stores = await storeRepository.find();
+    const store = stores.find((item) => item.id === id);
+
     if (!store) {
       throw new AppError(404, "Not Found any store with this id");
     }

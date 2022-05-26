@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 
 import CreateOrderService from "../services/order/createOrder.service";
 import DeleteOrderService from "../services/order/deleteOrder.service";
-import UpdateOrderService from "../services/order/updateOrder.service";
 import ListOrderService from "../services/order/listOrder.service";
 import ListAllOrderService from "../services/order/listAllOrder.service";
 import ListOrderStatusService from "../services/order/listOrderStatus.service";
+import UpdateOrderService from "../services/order/updateOrder.service";
 
 export default class OrderController {
   static async create(req: Request, res: Response) {

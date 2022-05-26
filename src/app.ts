@@ -6,12 +6,11 @@ import { appRoutes } from "./routes";
 const app = express();
 
 app.use(express.json());
+appRoutes(app);
 app.use(handleError);
 
-appRoutes(app);
-
-app.get("/", (request, response) => {
-  response.send("Hello World");
-});
+// app.get("/", (request, response) => {
+//   response.send("Hello World");
+// });
 
 export default app;
