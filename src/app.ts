@@ -11,7 +11,12 @@ app.use(handleError);
 appRoutes(app);
 
 app.get("/", (request, response) => {
-  response.send("Hello World");
+  const healthcheck = {
+    uptime: process.uptime(),
+    message: "Ok, running",
+    timestamp: Date.now(),
+  };
+  response.send(healthcheck);
 });
 
 export default app;
