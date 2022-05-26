@@ -8,12 +8,12 @@ services:
     ports:
       - 3000:3000
     environment:
-      - DB_USERNAME=diegoberselli
+      - DB_USERNAME=usuario
       - DB_HOST=db
       - DB=cap_fabio_9
-      - DB_PASSWORD=Berselli123
+      - DB_PASSWORD=password
       - DB_PORT=5432
-      - DATABASE_URL=postgres://diegoberselli:Berselli123@db:5432/cap_fabio_9
+      - DATABASE_URL=postgres://usuario:password@db:5432/cap_fabio_9
     depends_on:
       - db
   db:
@@ -22,7 +22,7 @@ services:
     ports: 
       - 45432:5432
     environment:
-      - POSTGRES_USER=diegoberselli
-      - POSTGRES_PASSWORD=Berselli123
+      - POSTGRES_USER=usuario
+      - POSTGRES_PASSWORD=password
       - POSTGRES_DB=cap_fabio_9
  
