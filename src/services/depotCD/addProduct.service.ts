@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source";
 import DepotCD from "../../entities/depotCD.entity";
 import { Product } from "../../entities/product.entity";
-import { Cd } from "../../entities/storageCdProducts.entity";
+import { Cd } from "../../entities/Cd.entity";
 import { AppError } from "../../errors/AppError";
 import {IProductDepotCDCreate} from "../../interfaces/depotCD";
 

@@ -6,6 +6,7 @@ import ListDepotCDService from '../services/depotCD/listDepotCD.service';
 import UpdateDepotCdProductService from '../services/depotCD/updateDepotCDProduct.service';
 import DeleteCDProductService from '../services/storageCD/deleteCDProduct.service';
 import ListCDProductsService from '../services/storageCD/listStorageCD.service';
+
  
 export default class DepotCDController {
     static store = async(request: Request, response: Response) => {
