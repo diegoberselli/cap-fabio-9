@@ -1,11 +1,10 @@
 import { Router } from "express";
-import DepotCDController from "../controllers/depotCD.controllers";
+import DepotCDController from "../controllers/depotCD.controller";
 
 const router = Router();
 
 export const depotCDRouter = () => {
 
-    
     router.post('/', DepotCDController.store);
     router.get('/', DepotCDController.list);
     router.get('/:id', DepotCDController.index);
