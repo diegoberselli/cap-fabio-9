@@ -4,5 +4,7 @@ export interface IProductCdCreate {
 }
 
 export interface IProductCd extends IProductCdCreate {
+  
   id: string;
+
 }

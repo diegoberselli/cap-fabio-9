@@ -25,6 +25,7 @@ export default class CreateProductCDService {
     cdRepository.create(cdProduct);
     await cdRepository.save(cdProduct);
 
-    return cdProduct;
-  };
+        return cdProduct;
+    }
 }
+
