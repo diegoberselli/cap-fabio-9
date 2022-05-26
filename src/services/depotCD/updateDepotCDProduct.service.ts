@@ -1,10 +1,10 @@
 import { AppDataSource } from "../../data-source";
 import DepotCD from "../../entities/depotCD.entity";
 import { Product } from "../../entities/product.entity";
-import { Cd } from "../../entities/storageCdProducts.entity";
+import { Cd } from "../../entities/Cd.entity";
 import { AppError } from "../../errors/AppError";
 import {IProductCDUpdate, IProductDepotCD} from '../../interfaces/depotCD/index'
-import { IProductCd } from "../../interfaces/storageCD";
+import { IProductCd } from "../../interfaces/CD";
 
 
 

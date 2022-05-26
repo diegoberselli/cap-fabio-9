@@ -1,5 +1,5 @@
 import { Router } from "express";
-import DepotCDController from "../controllers/depotCD.controllers";
+import DepotCDController from "../controllers/depotCD.controller";
 
 const router = Router();
 

@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { Product } from "./product.entity";
-import { Cd } from "./storageCdProducts.entity";
+import { Cd } from "./Cd.entity";
 import { v4 as uuid} from 'uuid';
 
 

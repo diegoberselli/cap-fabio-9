@@ -1,5 +1,5 @@
 import { IProduct } from "../products";
-import { IProductCd } from "../storageCD";
+import { IProductCd } from "../CD";
 
 export interface IProductDepotCDCreate {
     product_id: string;
