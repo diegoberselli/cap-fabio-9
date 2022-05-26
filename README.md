@@ -429,6 +429,29 @@ Content-type: application/json
 }
 ```
 
+### Schema de Validação com Yup:
+
+```javascript
+ schema: {
+    body: {
+      yupSchema: yup.object().shape({
+        branch: yup.string().required("branch name is required"),
+        city: yup.string().required("city name is required"),
+        street: yup.string().required("street name is required"),
+        district: yup.string().required("district name is required"),
+        number: yup.number().required("number is required"),
+        zipCode: yup.number().required("zipCode number is required"),
+        phone: yup.number().required("phone number is required"),
+      }),
+      validateOptions: {
+        abortEarly: false,
+      },
+    },
+  },
+```
+
+OBS.: Chaves não presentes no schema serão removidas.
+
 ### Exemplo de Response:
 
 ```
@@ -480,7 +503,7 @@ Vazio
 ### Exemplo de Response:
 
 ```
-200 OK
+204 OK
 ```
 
 ```json
@@ -740,40 +763,12 @@ Content-type: application/json
 Vazio
 ```
 
-### Schema de Validação com Yup:
-
-```javascript
- schema: {
-    body: {
-      yupSchema: yup.object().shape({
-        branch: yup.string().required("branch name is required"),
-        city: yup.string().required("city name is required"),
-        street: yup.string().required("street name is required"),
-        district: yup.string().required("district name is required"),
-        number: yup.number().required("number is required"),
-        zipCode: yup.number().required("zipCode number is required"),
-        phone: yup.number().required("phone number is required"),
-      }),
-      validateOptions: {
-        abortEarly: false,
-      },
-    },
-  },
-```
-
-OBS.: Chaves não presentes no schema serão removidas.
-
 ### Exemplo de Response:
 
 ```
-200 OK
+204 OK
 ```
 
-```json
-{
-  "message": "product deleted with sucess!"
-}
-```
 
 #
 
@@ -783,6 +778,8 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ---
 
+<<<<<<< HEAD
+=======
 ## 3. **Order**
 
 [ Voltar para os Endpoints ](#5-endpoints)
@@ -1202,6 +1199,7 @@ Nenhum, apenas uma lista vazia caso não encontre nenhuma order
 
 ---
 
+>>>>>>> fa8147b79d2928c7fd3b26b4346b4878763d4f32
 ## 4. **Storage**
 
 [ Voltar para os Endpoints ](#5-endpoints)
@@ -1422,13 +1420,7 @@ Vazio
 ### Exemplo de Response:
 
 ```
-200 OK
-```
-
-```json
-{
-  "message": "Storage deleted with sucess!"
-}
+204 OK
 ```
 
 #
