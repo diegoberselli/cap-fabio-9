@@ -5,10 +5,12 @@ import {
   OneToOne,
   JoinColumn,
   OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Storage } from "./storageStoreProducts";
-import { ProductRegistrationStorage } from "./productRegistrationStorage";
+import { Order } from "./order.entity";
 
 @Entity("store")
 export class Store {
@@ -61,11 +63,20 @@ export class Store {
   @Column()
   password: string;
 
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  update_at: Date;
+
   @OneToOne(() => Storage, {
     eager: true,
   })
   @JoinColumn()
   storage: Storage;
+
+  @OneToMany(() => Order, (order) => order.store)
+  orders: Order[];
 
   constructor() {
     if (!this.id) {

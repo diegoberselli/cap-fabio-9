@@ -5,6 +5,7 @@ import { productRouter } from "./product.routes";
 import { storeRouter } from "./store.routes";
 import { orderRouter } from "./order.routes";
 import { storageCDRouter } from "./storageCD.routes";
+import { depotCDRouter } from "./depotCD.routes";
 
 export const appRoutes = (app: Express) => {
   app.use("/store", storeRouter());
@@ -12,4 +13,5 @@ export const appRoutes = (app: Express) => {
   app.use("/order", orderRouter());
   app.use("/products", productRouter());
   app.use("/storage_cd", storageCDRouter());
+  app.use("/depot_cd", depotCDRouter());
 };

@@ -26,6 +26,7 @@ export default class UpdateProductService {
     description ? (product.description = description) : product.description;
     category ? (product.category = category) : product.category;
     img_URL ? (product.img_URL = img_URL) : product.img_URL;
+    product.update_at = new Date();
 
     await productRepository.save(product);
 

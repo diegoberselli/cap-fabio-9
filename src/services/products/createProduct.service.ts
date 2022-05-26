@@ -27,6 +27,8 @@ export default class CreateProductService {
     product.description = description;
     product.category = category;
     product.img_URL = img_URL;
+    product.created_at = new Date();
+    product.update_at = new Date();
 
     productRepository.create(product);
     await productRepository.save(product);

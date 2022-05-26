@@ -44,6 +44,8 @@ export default class CreateStoreService {
     store.zipcode = zipcode;
     store.phone = phone;
     store.password = bcrypt.hashSync(password, 8);
+    store.created_at = new Date();
+    store.update_at = new Date();
     store.storage = storage;
 
     await storeRepository.save(store);

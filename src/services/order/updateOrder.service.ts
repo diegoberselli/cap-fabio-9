@@ -1,10 +1,10 @@
 import { Order } from "../../entities/order.entity";
 import { AppError } from "../../errors/AppError";
 import { AppDataSource } from "../../data-source";
-import { IOrderObjectId } from "../../interfaces/order";
+import { IOrderObjectUpdate } from "../../interfaces/order";
 
-export default class DeleteOrderService {
-  static async execute({ id }: IOrderObjectId) {
+export default class UpdateOrderService {
+  static async execute({ id, status }: IOrderObjectUpdate) {
     const orderRepository = AppDataSource.getRepository(Order);
     const order = await orderRepository.findOne({
       where: {
@@ -16,7 +16,10 @@ export default class DeleteOrderService {
       throw new AppError(404, "Order not found");
     }
 
-    orderRepository.delete(order.id);
+    order.status = status || order.status;
+    order.update_at = new Date();
+
+    orderRepository.save(order);
 
     return order;
   }

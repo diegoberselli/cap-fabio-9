@@ -13,10 +13,11 @@ export const storeRouter = () => {
     StoreController.store
   );
   router.post("/login", StoreController.login);
-  router.get("/:id", authToken, StoreController.index);
   router.get("", authToken, StoreController.list);
+  router.get("/:id", authToken, StoreController.index);
   router.patch("/:id", authToken, StoreController.update);
   router.delete("/:id", authToken, StoreController.delete);
+  router.get("/orders/:id", StoreController.indexOrders);
 
   return router;
 };
