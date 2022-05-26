@@ -1,20 +1,22 @@
 import { Router } from "express";
 import StoreController from "../controllers/store.controller";
-import { expressYupMiddleware } from "express-yup-middleware";
-import createStoretValidation from "../validators/store/createStore.validation";
+import authToken from "../middlewares/authToken";
+// import { expressYupMiddleware } from "express-yup-middleware";
+// import createStoretValidation from "../validators/store/createStore.validation";
 
 const router = Router();
 
 export const storeRouter = () => {
   router.post(
     "",
-    expressYupMiddleware({ schemaValidator: createStoretValidation }),
+    // expressYupMiddleware({ schemaValidator: createStoretValidation }),
     StoreController.store
   );
-  router.get("", StoreController.list);
-  router.get("/:id", StoreController.index);
-  router.patch("/:id", StoreController.update);
-  router.delete("/:id", StoreController.delete);
+  router.post("/login", StoreController.login);
+  router.get("/:id", authToken, StoreController.index);
+  router.get("", authToken, StoreController.list);
+  router.patch("/:id", authToken, StoreController.update);
+  router.delete("/:id", authToken, StoreController.delete);
 
   return router;
 };

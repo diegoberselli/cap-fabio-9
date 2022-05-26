@@ -1,5 +1,14 @@
-import { Entity, PrimaryColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Storage } from "./storageStoreProducts";
+import { ProductRegistrationStorage } from "./productRegistrationStorage";
 
 @Entity("store")
 export class Store {
@@ -48,6 +57,15 @@ export class Store {
     nullable: false,
   })
   phone: string;
+
+  @Column()
+  password: string;
+
+  @OneToOne(() => Storage, {
+    eager: true,
+  })
+  @JoinColumn()
+  storage: Storage;
 
   constructor() {
     if (!this.id) {

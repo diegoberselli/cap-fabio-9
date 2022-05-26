@@ -1,18 +1,21 @@
 import { AppDataSource } from "../../data-source";
 import { Product } from "../../entities/product.entity";
+import { AppError } from "../../errors/AppError";
 
 interface IProductId {
-    id: string;
+  id: string;
 }
 
 export default class IndexProductService {
+  static execute = async ({ id }: IProductId) => {
+    const productRepository = AppDataSource.getRepository(Product);
+    const products = await productRepository.find();
+    const product = products.find((item) => item.id === id);
 
-    static execute = async ({id}: IProductId) => {
-        
-        const productRepository = AppDataSource.getRepository(Product);
-        const product = await productRepository.findOne({where:{id}})
-
-        return product
+    if (!product) {
+      throw new AppError(404, "Product not found");
     }
 
+    return product;
+  };
 }

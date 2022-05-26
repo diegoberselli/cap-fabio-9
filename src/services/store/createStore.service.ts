@@ -1,7 +1,9 @@
 import { IStoreCreate } from "../../interfaces/store";
 import { AppDataSource } from "../../data-source";
 import { Store } from "../../entities/store.entity";
+import { Storage } from "../../entities/storageStoreProducts";
 import { AppError } from "../../errors/AppError";
+import bcrypt from "bcryptjs";
 
 export default class CreateStoreService {
   static execute = async ({
@@ -12,6 +14,7 @@ export default class CreateStoreService {
     number,
     zipcode,
     phone,
+    password,
   }: IStoreCreate) => {
     const storeRepository = AppDataSource.getRepository(Store);
     const storeAlreadyExists = await storeRepository.findOne({
@@ -24,6 +27,14 @@ export default class CreateStoreService {
       );
     }
 
+    const storageRepository = AppDataSource.getRepository(Storage);
+
+    const storage = new Storage();
+    storage.amount = 0;
+    storage.storage_quantity = 0;
+
+    await storageRepository.save(storage);
+
     const store = new Store();
     store.branch = branch;
     store.city = city;
@@ -32,8 +43,9 @@ export default class CreateStoreService {
     store.number = number;
     store.zipcode = zipcode;
     store.phone = phone;
+    store.password = bcrypt.hashSync(password, 8);
+    store.storage = storage;
 
-    storeRepository.create(store);
     await storeRepository.save(store);
 
     return store;
