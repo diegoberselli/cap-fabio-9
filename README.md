@@ -120,24 +120,29 @@ Por enquanto, não foi implementada autenticação.
 - [Store](#1-store)
   - [POST - /store](#11-criação-de-loja)
   - [GET - /store](#12-listando-lojas)
-  - [GET - /store/:id](#13-listando-uma-loja)
-  - [PATCH - /store/:id](#14-atualizar-loja-por-id)
-  - [DELETE - /store/:id](#15-deletar-loja-por-id)
-  - [GET - /store/orders/:id](#16-listando-orders-da-loja)
+  - [GET - /store/:id](#13-listar-loja-por-id)
+  - [GET - /store/orders/:id](#14-listando-orders-da-loja)
+  - [PATCH - /store/:id](#15-atualizar-loja-por-id)
+  - [DELETE - /store/:id](#16-deletar-loja-por-id)
 - [Products](#2-products)
-  - [POST - /products](#11-criação-de-produto)
-  - [GET - /products](#12-listando-produtos)
-  - [GET - /products/:id](#13-listando-um-produto)
-  - [PATCH - /products/:id](#14-atualizar-produto-por-id)
-  - [DELETE - /products/:id](#15-deletar-produto-por-id)
-- [Orders](#3-orders)
-  - [POST - /order](#17-criação-de-pedido)
-  - [GET - /order](#18-listando-pedidos)
-  - [GET - /order/:id](#19-listando-um-pedido)
-  - [PATCH - /order/:id](#20-atualizar-pedido-por-id)
-  - [DELETE - /order/:id](#21-deletar-pedido-por-id)
-  - [GET - /order/status/:status](#22-listando-pedidos-por-status)
+  - [POST - /products](#21-criação-de-produto)
+  - [GET - /products](#22-listando-produtos)
+  - [GET - /products/:id](#23-listar-produto-por-id)
+  - [PATCH - /products/:id](#24-atualizar-produto-por-id)
+  - [DELETE - /products/:id](#25-deletar-produto-por-id)
+- [Orders](#3-order)
+  - [POST - /order](#31-criação-de-order)
+  - [GET - /order](#32-listando-orders)
+  - [GET - /order/:id](#33-listar-order-por-id)
+  - [PATCH - /order/:id](#34-atualizar-order-por-id)
+  - [DELETE - /order/:id](#35-deletar-order-por-id)
+  - [GET - /order/status/:status](#36-listar-order-por-status)
 - [Storage](#4-storage)
+  - [POST - /storage](#41-criação-do-estoque)
+  - [GET - /storage](#42-listando-estoque)
+  - [GET - /storage/:id](#43-listar-estoque-por-id)
+  - [PATCH - /storage/:id](#44-atualizar-estoque-por-id)
+  - [DELETE - /storage/:id](#45-deletar-estoque-por-id)
 
 ---
 
@@ -201,6 +206,29 @@ Content-type: application/json
   "phone": "12345678"
 }
 ```
+
+### Schema de Validação com Yup:
+
+```javascript
+ schema: {
+    body: {
+      yupSchema: yup.object().shape({
+        branch: yup.string().required("branch name is required"),
+        city: yup.string().required("city name is required"),
+        street: yup.string().required("street name is required"),
+        district: yup.string().required("district name is required"),
+        number: yup.number().required("number is required"),
+        zipCode: yup.number().required("zipCode number is required"),
+        phone: yup.number().required("phone number is required"),
+      }),
+      validateOptions: {
+        abortEarly: false,
+      },
+    },
+  },
+```
+OBS.: Chaves não presentes no schema serão removidas.
+
 
 ### Exemplo de Response:
 
@@ -429,29 +457,6 @@ Content-type: application/json
 }
 ```
 
-### Schema de Validação com Yup:
-
-```javascript
- schema: {
-    body: {
-      yupSchema: yup.object().shape({
-        branch: yup.string().required("branch name is required"),
-        city: yup.string().required("city name is required"),
-        street: yup.string().required("street name is required"),
-        district: yup.string().required("district name is required"),
-        number: yup.number().required("number is required"),
-        zipCode: yup.number().required("zipCode number is required"),
-        phone: yup.number().required("phone number is required"),
-      }),
-      validateOptions: {
-        abortEarly: false,
-      },
-    },
-  },
-```
-
-OBS.: Chaves não presentes no schema serão removidas.
-
 ### Exemplo de Response:
 
 ```
@@ -520,7 +525,7 @@ Vazio
 
 ---
 
-## 2. **Product**
+## 2. **Products**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -769,7 +774,6 @@ Vazio
 204 OK
 ```
 
-
 #
 
 #
@@ -778,8 +782,6 @@ Vazio
 
 ---
 
-<<<<<<< HEAD
-=======
 ## 3. **Order**
 
 [ Voltar para os Endpoints ](#5-endpoints)
@@ -858,6 +860,23 @@ Content-type: application/json
   "status": "intransit"
 }
 ```
+### Schema de Validação com Yup:
+
+```javascript
+ schema: {
+    body: {
+      yupSchema: yup.object().shape({
+        status: yup.string().required("Please select a status: pending, finished, in transit").oneOf(["pending", "finished", "in transit"]),
+      }),
+      validateOptions: {
+        abortEarly: false,
+      },
+    },
+  },
+```
+OBS.: Chaves não presentes no schema serão removidas.
+
+
 
 ### Exemplo de Response:
 
@@ -1199,7 +1218,6 @@ Nenhum, apenas uma lista vazia caso não encontre nenhuma order
 
 ---
 
->>>>>>> fa8147b79d2928c7fd3b26b4346b4878763d4f32
 ## 4. **Storage**
 
 [ Voltar para os Endpoints ](#5-endpoints)
@@ -1421,6 +1439,9 @@ Vazio
 
 ```
 204 OK
+```
+```json
+Vazio
 ```
 
 #
