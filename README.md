@@ -220,7 +220,7 @@ Content-type: application/json
         street: yup.string().required("street name is required"),
         district: yup.string().required("district name is required"),
         number: yup.string().required("number is required"),
-        zipCode: yup.string().required("zipCode number is required"),
+        zipcode: yup.string().required("zipCode number is required"),
         phone: yup.string().required("phone number is required"),
       }),
       validateOptions: {
