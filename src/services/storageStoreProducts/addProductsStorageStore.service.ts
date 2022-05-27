@@ -1,7 +1,7 @@
 import { IProductRegistrationArray } from "../../interfaces/storageStoreProducts";
 import { Product } from "../../entities/product.entity";
-import { Storage } from "../../entities/storageStoreProducts";
-import { ProductRegistrationStorage } from "../../entities/productRegistrationStorage";
+import { Storage } from "../../entities/storageStoreProducts.entity";
+import { ProductRegistrationStorage } from "../../entities/productRegistrationStorage.entity";
 import { Store } from "../../entities/store.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/AppError";
@@ -57,8 +57,8 @@ export default class AddProductsStorageStoreService {
 
     products.forEach(async (item) => {
       const productRegistration = new ProductRegistrationStorage();
-      productRegistration.storage = storage as any;
-      productRegistration.product = item as any;
+      productRegistration.storage = <any>storage;
+      productRegistration.product = <any>item;
       productRegistration.quantity = item.quantity || 0;
       productRegistration.price = item.price || 0;
 
@@ -67,12 +67,15 @@ export default class AddProductsStorageStoreService {
       await productRegistrationRepository.save(productRegistration);
     });
 
-    storage!.storage_quantity = productIds.length + storage!.storage_quantity;
+    // storage!.storage_quantity = productIds.length + storage!.storage_quantity;
 
-    const amount = products.reduce((acc, item) => acc + item.price, 0);
-    storage!.amount = parseFloat((amount + storage!.amount).toFixed(2));
+    // const amount = products.reduce(
+    //   (acc, item) => acc + item.price * item.quantity,
+    //   0
+    // );
+    // storage!.amount = parseFloat((amount + storage!.amount).toFixed(2));
 
-    await storageRepository.save(storage as any);
+    await storageRepository.save(<any>storage);
 
     return returnProducts;
   }
