@@ -6,10 +6,10 @@
   "author": "diegoberselli <diegoberselliz@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev src/app.ts",
+    "dev": "ts-node-dev src/server.ts",
     "typeorm": "typeorm-ts-node-commonjs",
     "build": "tsc",
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "start": "node dist/app.js"
   },
   "devDependencies": {
@@ -17,16 +17,17 @@
     "@types/express": "^4.17.13",
     "@types/jest": "^27.5.1",
     "@types/jsonwebtoken": "^8.5.8",
-    "@types/node": "^17.0.34",
-    "@types/supertest": "^2.0.12",
+    "@types/node": "^17.0.35",
     "@types/uuid": "^8.3.4",
+    "@types/yup": "^0.29.14",
     "jest": "27.5.1",
-    "sqlite3": "^5.0.8",
     "supertest": "^6.2.3",
+    "ts-jest": "^28.0.3",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.6.4"
   },
   "dependencies": {
+    "@types/supertest": "^2.0.12",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
     "express-async-errors": "^3.1.1",
@@ -34,6 +35,9 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.6"
+    "sqlite3": "^5.0.8",
+    "ts-node": "^10.8.0",
+    "typeorm": "^0.3.6",
+    "yup": "^0.32.11"
   }
 }
