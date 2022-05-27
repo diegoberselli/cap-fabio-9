@@ -6,7 +6,7 @@ import { AppDataSource } from "./data-source";
     console.error("Error during data source initialization", err)
   );
 
-  app.listen(process.env.PORT || 4444, () => {
+  app.listen(process.env.PORT, () => {
     console.log("Running at 4444");
   });
 })();
