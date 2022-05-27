@@ -4,6 +4,7 @@ const createStoretValidation = {
   schema: {
     body: {
       yupSchema: yup.object().shape({
+        password: yup.string().required("password is required"),
         branch: yup.string().required("branch name is required"),
         state: yup.string().required("state name is required"),
         city: yup.string().required("city name is required"),
