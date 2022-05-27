@@ -216,7 +216,9 @@ Content-type: application/json
  schema: {
     body: {
       yupSchema: yup.object().shape({
-        branch: yup.string().required("branch name is required"),
+	branch: yup.string().required("branch name is required"),
+	password: yup.string().required("password is required"),
+        state: yup.string().required("state name is required"),
         city: yup.string().required("city name is required"),
         street: yup.string().required("street name is required"),
         district: yup.string().required("district name is required"),

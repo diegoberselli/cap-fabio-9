@@ -70,7 +70,7 @@ export default class CreateOrderService {
             where: { id: product.directed_from_id },
           });
           if (storageOfDirectedFrom) {
-            storageOfDirectedFrom.products.forEach(async (productStore) => {
+            storageOfDirectedFrom.products.forEach(async (productStore:any) => {
               if (productStore.product.id === product.id) {
                 const storageRegistration =
                   await storageRegistrationRepository.findOne({
