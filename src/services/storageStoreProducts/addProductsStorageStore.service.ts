@@ -67,14 +67,6 @@ export default class AddProductsStorageStoreService {
       await productRegistrationRepository.save(productRegistration);
     });
 
-    // storage!.storage_quantity = productIds.length + storage!.storage_quantity;
-
-    // const amount = products.reduce(
-    //   (acc, item) => acc + item.price * item.quantity,
-    //   0
-    // );
-    // storage!.amount = parseFloat((amount + storage!.amount).toFixed(2));
-
     await storageRepository.save(<any>storage);
 
     return returnProducts;

@@ -9,9 +9,6 @@ export default class IndexStoreService {
 
     const allStores = await storeRepository.find();
     const store = allStores.find((item) => item.id === id);
-    // Usando o método findOne para consultas por id, se o
-    // id não combinar, a aplicação é interrompida estourando erro interno 500
-    // impossibilitando a verificação na linha 16
 
     if (!store) {
       throw new AppError(404, "Store not found");
