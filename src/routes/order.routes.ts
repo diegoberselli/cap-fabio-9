@@ -1,6 +1,6 @@
 import { Router } from "express";
 import OrderController from "../controllers/order.controller";
-// import createOrdertValidation from "../validators/order/createOrder.validation";
+import createOrdertValidation from "../validators/order/createOrder.validation";
 import { expressYupMiddleware } from "express-yup-middleware";
 
 const router = Router();
@@ -8,7 +8,7 @@ const router = Router();
 export const orderRouter = () => {
   router.post(
     "",
-    // expressYupMiddleware({ schemaValidator: createOrdertValidation }),
+    expressYupMiddleware({ schemaValidator: createOrdertValidation }),
     OrderController.create
   );
   router.get("", OrderController.showAll);

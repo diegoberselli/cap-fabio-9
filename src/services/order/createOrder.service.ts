@@ -6,8 +6,8 @@ import { IOrderCreate } from "../../interfaces/order";
 import { Product } from "../../entities/product.entity";
 import { In } from "typeorm";
 import DepotCD from "../../entities/depotCD.entity";
-import { Storage } from "../../entities/storageStoreProducts";
-import { ProductRegistrationStorage } from "../../entities/productRegistrationStorage";
+import { Storage } from "../../entities/storageStoreProducts.entity";
+import { ProductRegistrationStorage } from "../../entities/productRegistrationStorage.entity";
 
 export default class CreateOrderService {
   static async execute({ storeId, productArray, status }: IOrderCreate) {
@@ -70,7 +70,7 @@ export default class CreateOrderService {
             where: { id: product.directed_from_id },
           });
           if (storageOfDirectedFrom) {
-            storageOfDirectedFrom.products.forEach(async (productStore) => {
+            storageOfDirectedFrom.products.forEach(async (productStore:any) => {
               if (productStore.product.id === product.id) {
                 const storageRegistration =
                   await storageRegistrationRepository.findOne({
