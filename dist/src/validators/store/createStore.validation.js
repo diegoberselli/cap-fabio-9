@@ -29,12 +29,13 @@ const createStoretValidation = {
         body: {
             yupSchema: yup.object().shape({
                 branch: yup.string().required("branch name is required"),
+                state: yup.string().required("state name is required"),
                 city: yup.string().required("city name is required"),
                 street: yup.string().required("street name is required"),
                 district: yup.string().required("district name is required"),
-                number: yup.number().required("number is required"),
-                zipCode: yup.number().required("zipCode number is required"),
-                phone: yup.number().required("phone number is required"),
+                number: yup.string().required("number is required"),
+                zipcode: yup.string().required("zipCode number is required"),
+                phone: yup.string().required("phone number is required"),
             }),
             validateOptions: {
                 abortEarly: false,
