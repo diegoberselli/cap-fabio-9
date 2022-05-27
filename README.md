@@ -142,6 +142,18 @@ Por enquanto, não foi implementada autenticação.
   - [POST - /storage/add](#41-adicionar-produtos-no-estoque)
   - [PATCH - /storage/update](#42-atualizar-o-estoque)
   - [DELETE - /storage/delete/:id](#43-deletar-produtos-do-estoque)
+- [CD](#5-CD)
+  - [POST - /cd](#51-criação-de-cd)
+  - [GET - /cd](#52-listando-cds)
+  - [GET - /cd/:id](#53-listar-cd-por-id)
+  - [PATCH - /cd/:id](#54-atualizar-cd-por-id)
+  - [DELETE - /cd/:id](#55-deletar-cd-por-id)
+- [Depot CD](#6-depot-cd)
+  - [POST - /depot_cd](#61-criação-de-depot-cd)
+  - [GET - /depot_cd](#62-listando-depot-cds)
+  - [GET - /depot_cd/:id](#63-listar-depot-cd-por-id)
+  - [PATCH - /depot_cd/:id](#64-atualizar-depot-cd-por-id)
+  - [DELETE - /depot_cd/:id](#65-deletar-depot-cd-por-id)
 
 ---
 
@@ -1517,6 +1529,663 @@ Vazio
 | Código do Erro  | Descrição          |
 | --------------- | ------------------ |
 | 400 Bad Request | Invalid identifier |
+
+#
+
+#
+
+#
+
+---
+
+## 5. **CD**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto CD é definido como:
+
+| Campo      | Tipo   | Descrição                                              |
+| ---------- | ------ | ------------------------------------------------------ |
+| id         | string | Identificador único do CD                              |
+| branch     | string | Identificador de filial do CD.                         |
+| city       | string | A cidade onde o CD está alocado.                       |
+| street     | string | A rua/travessa/avenida onde o CD está alocado          |
+| district   | string | O bairro/jardim onde o CD está alocado                 |
+| number     | string | O número do prédio/construção onde o  CD está alocado  |
+| zipcode    | string | O código postal de onde o CD está alocada              |
+| phone      | string | Telefone principal de contato do CD                    |
+| create_At  | string | Data e hora que o CD foi criado                        |
+| updated_At | string | Data e hora que o CD foi atualizado                    |
+
+### Endpoints
+
+| Método | Rota           |Descrição                                                              |
+| ------ | -------------- | ----------------------------------------------------------------------|
+| POST   | /cd            | Criação de um CD.                                                     |
+| GET    | /cd            | Lista todos os CD's.                                                  |
+| GET    | /cd/:id        | Lista um CD, usando seu ID como parâmetro                             |
+| PATCH  | /cd/:id        | Atualiza uma ou mais propriedades do CD, usando seu ID como parâmetro |
+| DELETE | /cd/:id        | Deleta um CD, usando seu ID como parâmetro                            |
+
+---
+
+### 5.1. **Criação de CD**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/cd`
+
+### Exemplo de Request:
+
+```
+POST /cd
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+{
+  "branch": "filial1",
+  "city": "cidade-sp",
+  "street": "uma rua na cidade sp",
+  "district": "um bairro",
+  "number": "987",
+  "zipcode": "22506-300",
+  "phone": "12345678"
+}
+```
+
+### Schema de Validação com Yup:
+
+```javascript
+ schema: {
+    body: {
+      yupSchema: yup.object().shape({
+        branch: yup.string().required("branch name is required"),
+        city: yup.string().required("city name is required"),
+        street: yup.string().required("street name is required"),
+        district: yup.string().required("district name is required"),
+        number: yup.number().required("number is required"),
+        zipCode: yup.number().required("zipCode number is required"),
+        phone: yup.number().required("phone number is required"),
+      }),
+      validateOptions: {
+        abortEarly: false,
+      },
+    },
+  },
+```
+OBS.: Chaves não presentes no schema serão removidas.
+
+
+### Exemplo de Response:
+
+```
+201 Created
+```
+
+```json
+{
+  "id": "f8037574-a607-47f7-806a-4754302851ac",
+  "branch": "filiac3",
+  "city": "cidade-sp",
+  "street": "rua: uma rua na cidade sp",
+  "district": "bairro: um bairro",
+  "number": "123",
+  "zipcode": "123456",
+  "phone": "123456",
+  "created_at": "2022-05-25T16:47:25.595Z",
+  "update_at": "2022-05-25T16:47:25.595Z"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                                            |
+| -------------- | ---------------------------------------------------- |
+| 409 Conflict   | This cd already exists                               |
+
+---
+
+### 5.2. **Listando cd's**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/cd`
+
+### Exemplo de Request:
+
+```
+GET /cd
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+  {
+    "id": "f8037574-a607-47f7-806a-4754302851ac",
+    "branch": "filiac3",
+    "city": "cidade-sp",
+    "street": "rua: uma rua na cidade sp",
+    "district": "bairro: um bairro",
+    "number": "123",
+    "zipcode": "123456",
+    "phone": "123456",
+    "created_at": "2022-05-25T16:47:25.595Z",
+    "update_at": "2022-05-25T16:47:25.595Z"
+  }
+]
+```
+
+### Possíveis Erros:
+
+Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
+
+---
+
+### 5.3. **Listar CD por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/cd/:id`
+
+### Exemplo de Request:
+
+```
+GET /cd/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                           |
+| --------- | ------ | ----------------------------------- |
+| id        | string | Identificador único do CD           |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "id": "f8037574-a607-47f7-806a-4754302851ac",
+  "branch": "filiac3",
+  "city": "cidade-sp",
+  "street": "rua: uma rua na cidade sp",
+  "district": "bairro: um bairro",
+  "number": "123",
+  "zipcode": "123456",
+  "phone": "123456",
+  "created_at": "2022-05-25T16:47:25.595Z",
+  "update_at": "2022-05-25T16:47:25.595Z"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição       |
+| -------------- | --------------- |
+| 404 Not Found  | CD not found    |
+
+
+
+### 5.4. **Atualizar CD por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/cd/:id`
+
+### Exemplo de Request:
+
+```
+PATCH /cd/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                           |
+| --------- | ------ | ----------------------------------- |
+| id        | string | Identificador único do CD           |
+
+### Corpo da Requisição:
+
+```json
+{
+  "branch": "filial1",
+  "city": "cidade-sp",
+  "street": "uma rua na cidade sp atualizada",
+  "district": "um bairro atualizado",
+  "number": "001",
+  "zipcode": "22506-200",
+  "phone": "12345678"
+}
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "id": "810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59",
+  "branch": "filial1",
+  "city": "cidade-sp",
+  "street": "uma rua na cidade sp atualizada",
+  "district": "um bairro atualizado",
+  "number": "001",
+  "zipcode": "22506-200",
+  "phone": "12345678",
+  "created_at": "2022-05-25T12:15:35.764Z",
+  "update_at": "2022-05-25T12:15:53.785Z"
+}
+```
+
+### 5.5. **Deletar CD por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/cd/:id`
+
+### Exemplo de Request:
+
+```
+DELETE /cd/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                           |
+| --------- | ------ | ----------------------------------- |
+| id        | string | Identificador único do CD           |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+204 OK
+```
+
+```json
+{
+  "message": "CD deleted with sucess!"
+}
+```
+
+#
+
+#
+
+#
+
+---
+
+## 6. **Deposito CD**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto DEPOT CD é definido como:
+
+| Campo      | Tipo   | Descrição                                              |
+| ---------- | ------ | ------------------------------------------------------ |
+| id         | string | Identificador único do Depot CD.                       |
+| product    | object | Produto que esta se referindo.                         |
+| cd         | object | CD que esta este produto.                              |
+| quantity   | number | Quantidade deste produto neste cd.                     |
+
+
+### Endpoints
+
+| Método | Rota                 |Descrição                                                                    |
+| ------ | -------------------- | ----------------------------------------------------------------------------|
+| POST   | /depot_cd            | Criação de um CD.                                                     |
+| GET    | /depot_cd            | Lista todos os CD's.                                                  |
+| GET    | /depot_cd/:id        | Lista um CD, usando seu ID como parâmetro                             |
+| PATCH  | /depot_cd/:id        | Atualiza uma ou mais propriedades do CD, usando seu ID como parâmetro |
+| DELETE | /depot_cd/:id        | Deleta um CD, usando seu ID como parâmetro                            |
+
+---
+
+### 6.1. **Criação de Depot CD**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/depot_cd`
+
+### Exemplo de Request:
+
+```
+POST /depot_cd
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+{
+  "product_id": "codigo unico do produto",
+  "cd_id": "codigo unico do id",
+  "quantity": 12 , //(quantidade numerica do produto)
+}
+```
+
+### Exemplo de Response:
+
+```
+201 Created
+```
+
+```json
+{
+  {
+	"id": "726f28b9-344c-44d2-9a62-86d096f1c66a",
+	"product": {
+		"id": "e1e1e667-51f3-4ff3-bce9-20778d4e3ee0",
+		"name": "nome do produto",
+		"description": "descrição do produto",
+		"price": 100, //(preço do produto)
+		"category": "categoria do produto",
+		"img_URL": "link url da imagem do produto",
+		"created_at": "2022-05-27T05:37:46.246Z",
+		"update_at": "2022-05-27T05:37:46.246Z"
+	},
+	"quantity": 12,
+	"cd": {
+		"id": "d53e9371-a830-4cce-a690-8d0515643cfa",
+		"branch": "branch do cd",
+		"city": "cidade do cd",
+		"street": "rua do cd",
+		"district": "distrito do cd",
+		"number": " numero do cd",
+		"zipcode": "cep do cd",
+		"phone": "telefone do cd"
+	}
+}
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                                            |
+| -------------- | ---------------------------------------------------- |
+| 409 Conflict   | This depot_cd already exists                               |
+
+---
+
+### 6.2. **Listando depot cd's**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/depot_cd`
+
+### Exemplo de Request:
+
+```
+GET /depot_cd
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+  {
+	"id": "726f28b9-344c-44d2-9a62-86d096f1c66a",
+	"product": {
+		"id": "e1e1e667-51f3-4ff3-bce9-20778d4e3ee0",
+		"name": "nome do produto",
+		"description": "descrição do produto",
+		"price": 100, //(preço do produto)
+		"category": "categoria do produto",
+		"img_URL": "link url da imagem do produto",
+		"created_at": "2022-05-27T05:37:46.246Z",
+		"update_at": "2022-05-27T05:37:46.246Z"
+	},
+	"quantity": 12,
+	"cd": {
+		"id": "d53e9371-a830-4cce-a690-8d0515643cfa",
+		"branch": "branch do cd",
+		"city": "cidade do cd",
+		"street": "rua do cd",
+		"district": "distrito do cd",
+		"number": " numero do cd",
+		"zipcode": "cep do cd",
+		"phone": "telefone do cd"
+	}
+}
+]
+```
+
+### Possíveis Erros:
+
+Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
+
+---
+
+### 6.3. **Listar depot CD por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/depot_cd/:id`
+
+### Exemplo de Request:
+
+```
+GET /depot_cd/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                           |
+| --------- | ------ | ----------------------------------- |
+| id        | string | Identificador único do depot CD     |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+  {
+	"id": "726f28b9-344c-44d2-9a62-86d096f1c66a",
+	"product": {
+		"id": "e1e1e667-51f3-4ff3-bce9-20778d4e3ee0",
+		"name": "nome do produto",
+		"description": "descrição do produto",
+		"price": 100, //(preço do produto)
+		"category": "categoria do produto",
+		"img_URL": "link url da imagem do produto",
+		"created_at": "2022-05-27T05:37:46.246Z",
+		"update_at": "2022-05-27T05:37:46.246Z"
+	},
+	"quantity": 12,
+	"cd": {
+		"id": "d53e9371-a830-4cce-a690-8d0515643cfa",
+		"branch": "branch do cd",
+		"city": "cidade do cd",
+		"street": "rua do cd",
+		"district": "distrito do cd",
+		"number": " numero do cd",
+		"zipcode": "cep do cd",
+		"phone": "telefone do cd"
+	}
+}
+ 
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição             |
+| -------------- | --------------------- |
+| 404 Not Found  | depot CD not found    |
+
+
+
+### 6.4. **Atualizar depot CD por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/depot_cd/:id`
+
+### Exemplo de Request:
+
+```
+PATCH /depot_cd/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                           |
+| --------- | ------ | ----------------------------------- |
+| id        | string | Identificador único do depot CD     |
+
+### Corpo da Requisição:
+
+```json
+{
+  "quantity": 72
+}
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+
+  {
+	"id": "726f28b9-344c-44d2-9a62-86d096f1c66a",
+	"product": {
+		"id": "e1e1e667-51f3-4ff3-bce9-20778d4e3ee0",
+		"name": "nome do produto",
+		"description": "descrição do produto",
+		"price": 100, //(preço do produto)
+		"category": "categoria do produto",
+		"img_URL": "link url da imagem do produto",
+		"created_at": "2022-05-27T05:37:46.246Z",
+		"update_at": "2022-05-27T05:37:46.246Z"
+	},
+	"quantity": 72,
+	"cd": {
+		"id": "d53e9371-a830-4cce-a690-8d0515643cfa",
+		"branch": "branch do cd",
+		"city": "cidade do cd",
+		"street": "rua do cd",
+		"district": "distrito do cd",
+		"number": " numero do cd",
+		"zipcode": "cep do cd",
+		"phone": "telefone do cd"
+	}
+}
+
+```
+
+### 6.5. **Deletar depot CD por ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/depot_cd/:id`
+
+### Exemplo de Request:
+
+```
+DELETE /depot_cd/810bd8b0-358a-4bcf-bc37-bd0fa9fd0e59
+Host: https://cap-fabio-9.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                           |
+| --------- | ------ | ----------------------------------- |
+| id        | string | Identificador único do depot CD     |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+204 OK
+```
+
+```json
+{
+  "message": "Depot CD deleted with sucess!"
+}
+```
 
 #
 
