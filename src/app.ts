@@ -11,7 +11,7 @@ app.use(express.json());
 appRoutes(app);
 app.use(handleError);
 
-app.get("", (req: Request, res:Response) => {
+app.get("/", (req: Request, res:Response) => {
   res.send("Hello World");
 });
 
