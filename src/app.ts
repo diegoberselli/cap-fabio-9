@@ -9,8 +9,14 @@ app.use(express.json());
 appRoutes(app);
 app.use(handleError);
 
-// app.get("/", (request, response) => {
-//   response.send("Hello World");
-// });
+app.get("/", (request, response) => {
+  const healthcheck = {
+    uptime: process.uptime(),
+    message: "Ok, running",
+    timestamp: Date.now(),
+  };
+  response.send(healthcheck);
+});
+
 
 export default app;

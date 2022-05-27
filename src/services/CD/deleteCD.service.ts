@@ -1,13 +1,13 @@
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/AppError";
 import { DeleteResult } from "typeorm";
-import { Cd } from '../../entities/storageCdProducts.entity';
+import { Cd } from '../../entities/Cd.entity';
 
 interface ICDProductId {
     id: string;
 }
 
-export default class DeleteCDProductService {
+export default class DeleteCDService {
 
     static execute = async({id}: ICDProductId): Promise<DeleteResult>  => {
 

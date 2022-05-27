@@ -1,18 +1,18 @@
 import { AppDataSource } from "../../data-source";
-import { Cd } from '../../entities/storageCdProducts.entity';
+import { Cd } from '../../entities/Cd.entity';
 
 interface ICDProductId {
     id: string;
 }
 
-export default class IndexCDProductService {
+export default class IndexCDService {
 
     static execute = async ({id}: ICDProductId) => {
         
         const cdRepository = AppDataSource.getRepository(Cd);
-        const cdProduct = await cdRepository.findOne({where:{id}})
+        const cd = await cdRepository.findOne({where:{id}})
 
-        return cdProduct;
+        return cd;
     }
 
 }
