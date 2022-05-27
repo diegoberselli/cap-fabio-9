@@ -16,7 +16,7 @@ const app_1 = __importDefault(require("./app"));
 const data_source_1 = require("./data-source");
 (() => __awaiter(void 0, void 0, void 0, function* () {
     yield data_source_1.AppDataSource.initialize().catch((err) => console.error("Error during data source initialization", err));
-    app_1.default.listen(process.env.PORT || 4444, () => {
+    app_1.default.listen(process.env.PORT, () => {
         console.log("Running at 4444");
     });
 }))();

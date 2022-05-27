@@ -8,8 +8,8 @@ const express_1 = require("express");
 const CD_controller_1 = __importDefault(require("../controllers/CD.controller"));
 const router = (0, express_1.Router)();
 const CDRouter = () => {
-    router.post('/', CD_controller_1.default.store);
-    router.get('/', CD_controller_1.default.list);
+    router.post('', CD_controller_1.default.store);
+    router.get('', CD_controller_1.default.list);
     router.get('/:id', CD_controller_1.default.index);
     router.patch('/:id', CD_controller_1.default.update);
     router.delete('/:id', CD_controller_1.default.delete);
