@@ -12,12 +12,7 @@ appRoutes(app);
 app.use(handleError);
 
 app.get("", (req: Request, res:Response) => {
-  const healthcheck = {
-    uptime: process.uptime(),
-    message: "Ok, running",
-    timestamp: Date.now(),
-  };
-  res.send(healthcheck);
+  res.send("Hello World");
 });
 
 
