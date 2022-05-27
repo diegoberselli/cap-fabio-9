@@ -13,6 +13,7 @@ export default class DepotCDController {
         const cdProduct = await AddProductService.execute({product_id, cd_id, quantity});
 
         return response.status(201).json(cdProduct);
+
     }
  
     static list = async(request: Request, response: Response) => {
@@ -40,7 +41,6 @@ export default class DepotCDController {
  
     static delete = async(request: Request, response: Response) => {
         const {id} = request.params;
-        console.log('chegou aqui')
         const deletedCDProduct = await DeleteDepotCDProductService.execute({id});
 
         return response.status(204).json();

@@ -31,6 +31,7 @@ export default class AddProductService {
 
         depotCDRepository.create(depotCDProduct);
         await depotCDRepository.save(depotCDProduct);
+      
 
         return depotCDProduct;
     }

@@ -12,6 +12,10 @@ describe("Testing the store routes", () => {
   const number = "teste";
   const zipcode = "teste";
   const phone = "teste";
+  const password = "teste";
+  const created_at = 212121
+  const update_at = 21212121
+
 
   const storeData = {
     id,
@@ -22,6 +26,9 @@ describe("Testing the store routes", () => {
     number,
     zipcode,
     phone,
+    password,
+    created_at,
+    update_at,
   };
   let connection: DataSource;
 
@@ -44,18 +51,20 @@ describe("Testing the store routes", () => {
     expect(response.body.id).toBeDefined();
     expect(response.body).toEqual(
       expect.objectContaining({
-        branch,
+        id:storeData.id,
+        branch, 
         city,
         street,
         district,
         number,
         zipcode,
         phone,
+        password
       })
     );
   });
 
-  test("Should be able to return a list of all registered sotres", async () => {
+  test("Should be able to return a list of all registered stores", async () => {
     const response = await request(app).get("/store");
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("map");
@@ -74,6 +83,7 @@ describe("Testing the store routes", () => {
         number,
         zipcode,
         phone,
+        password
       })
     );
   });
@@ -96,15 +106,13 @@ describe("Testing the store routes", () => {
         number,
         zipcode,
         phone,
+        password
       })
     );
   });
 
   test("Should be able to delete an store", async () => {
     const deleteResponse = await request(app).delete(`/store/${storeData.id}`);
-    expect(deleteResponse.status).toBe(200);
-    expect(deleteResponse.body).toEqual({
-      message: "Store deleted with sucess!",
-    });
+    expect(deleteResponse.status).toBe(204);
   });
 });

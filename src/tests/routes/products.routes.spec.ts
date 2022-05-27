@@ -9,6 +9,7 @@ describe("Testing the products routes", () => {
   const price = 123;
   const description = "test_description";
   const category = "test_category";
+  const img_URL = "test_img"
 
   const productData = {
     id,
@@ -16,6 +17,7 @@ describe("Testing the products routes", () => {
     price,
     description,
     category,
+    img_URL,
   };
   let connection: DataSource;
 
@@ -43,6 +45,7 @@ describe("Testing the products routes", () => {
         price,
         description,
         category,
+        img_URL,
       })
     );
   });
@@ -63,6 +66,7 @@ describe("Testing the products routes", () => {
         price,
         description,
         category,
+        img_URL,
       })
     );
   });
@@ -80,6 +84,7 @@ describe("Testing the products routes", () => {
         price,
         description,
         category,
+        img_URL,
       })
     );
   });
