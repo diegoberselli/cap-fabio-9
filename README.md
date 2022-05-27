@@ -119,12 +119,12 @@ Por enquanto, não foi implementada autenticação.
 
 - [Store](#1-store)
   - [POST - /store](#11-criação-de-loja)
-  - [POST - /store/login](#11-login-na-loja)
   - [GET - /store](#12-listando-lojas)
   - [GET - /store/:id](#13-listar-loja-por-id)
   - [GET - /store/orders/:id](#14-listando-orders-da-loja)
   - [PATCH - /store/:id](#15-atualizar-loja-por-id)
   - [DELETE - /store/:id](#16-deletar-loja-por-id)
+  - [POST - /store/login](#17-efetuar-o-login-no-sistema-da-loja)
 - [Products](#2-products)
   - [POST - /products](#21-criação-de-produto)
   - [GET - /products](#22-listando-produtos)
@@ -139,9 +139,9 @@ Por enquanto, não foi implementada autenticação.
   - [DELETE - /order/:id](#35-deletar-order-por-id)
   - [GET - /order/status/:status](#36-listar-order-por-status)
 - [Storage](#4-storage)
-  - [POST - /storage/add](#41-adicionar-produto)
-  - [PATCH - /storage/update](#44-atualizar-produto)
-  - [DELETE - /storage/delete/:id](#45-deletar-produto-estoque)
+  - [POST - /storage/add](#41-adicionar-produtos-no-estoque)
+  - [PATCH - /storage/update](#42-atualizar-o-estoque)
+  - [DELETE - /storage/delete/:id](#43-deletar-produtos-do-estoque)
 
 ---
 
@@ -582,7 +582,7 @@ Vazio
 
 ///////////////////////////////////////////////////////////
 
-### 1.5. **Efetuar o login no sistema da loja**
+### 1.7. **Efetuar o login no sistema da loja**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -1383,24 +1383,24 @@ Definição do objeto no corpo da requisição:
 ```json
 {
   {
-	"message": "Successfully stored products",
-	"addedProducts": [
-		{
+	  "message": "Successfully stored products",
+	  "addedProducts": [
+		  {
 			"id": "270b0ab7-82af-4c17-b676-ea1f79943a4b",
 			"quantity": 40,
 			"price": 80
-		},
-		{
+		  },
+		  {
 			"id": "8295acbb-560b-41ce-a028-2874dd0fcf4c",
 			"quantity": 10,
 			"price": 3200
-		}
-	]
-}
+		  }
+	 ]
+  }
 }
 ```
 
-### 4.2. **Atualizando o Estoque**
+### 4.2. **Atualizar o Estoque**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -1411,7 +1411,7 @@ Definição do objeto no corpo da requisição:
 ```
 GET /storage/update
 Host: https://cap-fabio-9.herokuapp.com/
-Authorization: Bearer tpken
+Authorization: Bearer token
 Content-type: application/json
 ```
 
