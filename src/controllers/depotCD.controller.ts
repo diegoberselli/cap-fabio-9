@@ -1,12 +1,12 @@
-import {Request, Response} from 'express';
-import AddProductService from '../services/depotCD/addProduct.service';
-import DeleteDepotCDProductService from '../services/depotCD/deleteProductDepotCD.service';
-import IndexDepotCDProductService from '../services/depotCD/indexDepotCDProduct.service';
-import ListDepotCDService from '../services/depotCD/listDepotCD.service';
-import UpdateDepotCdProductService from '../services/depotCD/updateDepotCDProduct.service';
+import { Request, Response } from "express";
+import AddProductService from "../services/depotCD/addProduct.service";
+import DeleteDepotCDProductService from "../services/depotCD/deleteProductDepotCD.service";
+import IndexDepotCDProductService from "../services/depotCD/indexDepotCDProduct.service";
+import ListDepotCDService from "../services/depotCD/listDepotCD.service";
+import UpdateDepotCdProductService from "../services/depotCD/updateDepotCDProduct.service";
 
- 
 export default class DepotCDController {
+  
     static store = async(request: Request, response: Response) => {
         const {product_id, cd_id, quantity} = request.body;
 
@@ -48,3 +48,4 @@ export default class DepotCDController {
     }
  
 };
+
