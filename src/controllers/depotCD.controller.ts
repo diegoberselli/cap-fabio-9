@@ -6,51 +6,46 @@ import ListDepotCDService from "../services/depotCD/listDepotCD.service";
 import UpdateDepotCdProductService from "../services/depotCD/updateDepotCDProduct.service";
 
 export default class DepotCDController {
-  static store = async (request: Request, response: Response) => {
-    const { product_id, cd_id, quantity } = request.body;
+  
+    static store = async(request: Request, response: Response) => {
+        const {product_id, cd_id, quantity} = request.body;
 
-    const cdProduct = await AddProductService.execute({
-      product_id,
-      cd_id,
-      quantity,
-    });
+        const cdProduct = await AddProductService.execute({product_id, cd_id, quantity});
 
-    return response.status(201).json(cdProduct);
-  };
+        return response.status(201).json(cdProduct);
 
-  static list = async (request: Request, response: Response) => {
-    const cdProducts = await ListDepotCDService.execute();
+    }
+ 
+    static list = async(request: Request, response: Response) => {
+        const cdProducts = await ListDepotCDService.execute();
 
-    return response.json(cdProducts);
-  };
+        return response.json(cdProducts);
+    }
+ 
+    static index = async(request: Request, response: Response) => {
+        const {id} = request.params;
 
-  static index = async (request: Request, response: Response) => {
-    const { id } = request.params;
+        const cdProduct = await IndexDepotCDProductService.execute({id});
 
-    const cdProduct = await IndexDepotCDProductService.execute({ id });
+        return response.json(cdProduct);
+    }
+ 
+    static update = async(request: Request, response: Response) => {
+        const {id} = request.params;
+        const{ product_id, cd_id, quantity} = request.body;
 
-    return response.json(cdProduct);
-  };
+        const updatedCDProduct = await UpdateDepotCdProductService.execute({id, product_id, cd_id, quantity});
 
-  static update = async (request: Request, response: Response) => {
-    const { id } = request.params;
-    const { product_id, cd_id, quantity } = request.body;
+        return response.json(updatedCDProduct);
+    }
+ 
+    static delete = async(request: Request, response: Response) => {
+        const {id} = request.params;
+        const deletedCDProduct = await DeleteDepotCDProductService.execute({id});
 
-    const updatedCDProduct = await UpdateDepotCdProductService.execute({
-      id,
-      product_id,
-      cd_id,
-      quantity,
-    });
+        return response.status(204).json();
 
-    return response.json(updatedCDProduct);
-  };
+    }
+ 
+};
 
-  static delete = async (request: Request, response: Response) => {
-    const { id } = request.params;
-    console.log("chegou aqui");
-    const deletedCDProduct = await DeleteDepotCDProductService.execute({ id });
-
-    return response.status(204).json();
-  };
-}

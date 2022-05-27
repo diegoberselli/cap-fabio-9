@@ -32,6 +32,7 @@ describe("Testing the storage routes", () => {
     expect(response.body.id).toBeDefined();
     expect(response.body).toEqual(
       expect.objectContaining({
+        id:storageData.id,
         storage_quantity,
       })
     );
@@ -72,9 +73,6 @@ describe("Testing the storage routes", () => {
     const deleteResponse = await request(app).delete(
       `/storage/${storageData.id}`
     );
-    expect(deleteResponse.status).toBe(200);
-    expect(deleteResponse.body).toEqual({
-      message: "Storage deleted with sucess!",
-    });
+    expect(deleteResponse.status).toBe(204);
   });
 });
