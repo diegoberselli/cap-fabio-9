@@ -9,8 +9,17 @@ import IndexOrdersStoreService from "../services/store/indexOrdersStore.service"
 
 export default class StoreController {
   static store = async (request: Request, response: Response) => {
-    const { branch, city, street, district, number, zipcode, phone, password } =
-      request.body;
+    const {
+      branch,
+      city,
+      street,
+      district,
+      number,
+      zipcode,
+      phone,
+      password,
+      state,
+    } = request.body;
     const store = await CreateStoreService.execute({
       branch,
       city,
@@ -20,6 +29,7 @@ export default class StoreController {
       zipcode,
       phone,
       password,
+      state,
     });
     return response.status(201).json(store);
   };
@@ -43,7 +53,7 @@ export default class StoreController {
   };
 
   static update = async (request: Request, response: Response) => {
-    const { branch, city, street, district, number, zipcode, phone } =
+    const { branch, city, street, district, number, zipcode, phone, state } =
       request.body;
     const { id } = request.params;
     const updatedStore = await UpdateStoreService.execute({
@@ -55,6 +65,7 @@ export default class StoreController {
       number,
       zipcode,
       phone,
+      state,
     });
     return response.status(200).json(updatedStore);
   };

@@ -7,6 +7,7 @@ export interface IStore {
   number: string;
   zipcode: string;
   phone: string;
+  state: string;
 }
 
 export interface IStoreCreate {
@@ -18,6 +19,7 @@ export interface IStoreCreate {
   zipcode: string;
   phone: string;
   password: string;
+  state: string;
 }
 
 export interface IStoreId {

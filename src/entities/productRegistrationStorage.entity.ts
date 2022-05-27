@@ -5,8 +5,9 @@ import {
   Entity,
   UpdateDateColumn,
   CreateDateColumn,
+  JoinColumn,
 } from "typeorm";
-import { Storage } from "./storageStoreProducts";
+import { Storage } from "./storageStoreProducts.entity";
 import { Product } from "./product.entity";
 
 @Entity("product_registration_storage")
@@ -32,5 +33,6 @@ export class ProductRegistrationStorage {
   product: Product;
 
   @ManyToOne(() => Storage)
+  @JoinColumn()
   storage: Storage;
 }

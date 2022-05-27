@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { Storage } from "./storageStoreProducts";
+import { Storage } from "./storageStoreProducts.entity";
 import { Order } from "./order.entity";
 
 @Entity("store")
@@ -41,6 +41,12 @@ export class Store {
     nullable: false,
   })
   district: string;
+
+  @Column({
+    length: 20,
+    nullable: false,
+  })
+  state: string;
 
   @Column({
     length: 10,

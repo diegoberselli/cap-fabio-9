@@ -6,12 +6,14 @@ const router = Router();
 
 export const storageRouter = () => {
   router.post("", StorageStoreProductController.store);
-  router.get("", StorageStoreProductController.list);
-  router.get("/:id", StorageStoreProductController.index);
-  router.patch("/:id", StorageStoreProductController.update);
-  router.delete("/:id", StorageStoreProductController.delete);
-
+  router.delete(
+    "/delete/:id_product_storage",
+    authToken,
+    StorageStoreProductController.delete
+  );
   router.post("/add", authToken, StorageStoreProductController.addProducts);
+
+  router.patch("/update", authToken, StorageStoreProductController.update);
 
   return router;
 };
