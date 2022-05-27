@@ -12,7 +12,6 @@ export const orderRouter = () => {
     OrderController.create
   );
   router.get("", OrderController.showAll);
-  console.log("routes");
   router.get("", OrderController.show);
   router.delete("/delete", OrderController.delete);
   router.get("/status/:status", OrderController.showStatus);
